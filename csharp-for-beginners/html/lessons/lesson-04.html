@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Урок 4: Вход от клавиатурата и преобразуване на типове</title>
+  <link rel="stylesheet" href="../assets/course.css">
+</head>
+<body>
+  <main class="page">
+    <nav class="top-nav" aria-label="Основна навигация">
+      <div class="top-nav-title">C# за начинаещи</div>
+      <div class="top-nav-links">
+        <a href="../index.html">Начало</a>
+        <a href="../docs/curriculum.html">Програма</a>
+        <a href="../docs/glossary.html">Речник</a>
+      </div>
+    </nav>
+
+    <article class="lesson">
+      <header class="lesson-header">
+        <div class="lesson-label">Урок 4</div>
+        <h1>Вход от клавиатурата и преобразуване на типове</h1>
+      </header>
+
+      <section>
+        <h2>Какво ще научиш</h2>
+        <ul>
+          <li>Как да прочетеш текст от клавиатурата с <code>Console.ReadLine</code>.</li>
+          <li>Как да запазиш въведеното в променлива.</li>
+          <li>Защо входът първо идва като текст.</li>
+          <li>Как да преобразуваш текст към <code>int</code> и <code>double</code>.</li>
+          <li>Как да пишеш малки интерактивни конзолни програми.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Защо това е важно</h2>
+        <p>Досега програмите използваха стойности, които бяха написани предварително в кода. С вход от клавиатурата програмата може да попита човека за име, възраст, точки или цена.</p>
+        <p>Така програмата вече не само говори. Тя слуша.</p>
+      </section>
+
+      <section>
+        <h2>История с Byte</h2>
+        <p>Byte иска да поздрави човека по име. Вместо винаги да показва <code>"Здравей, човек!"</code>, той пита дали може първо да прочете име.</p>
+        <blockquote>Byte: "Мога ли първо да попитам за име, после да използвам отговора?"</blockquote>
+        <p>Да. За това ни трябва <code>Console.ReadLine()</code>. Но Byte трябва да помни, че всичко от клавиатурата първо пристига като текст.</p>
+      </section>
+
+      <section>
+        <h2>Основно обяснение</h2>
+        <p>За да прочетем ред от клавиатурата, използваме:</p>
+        <pre><code class="language-csharp">Console.ReadLine()</code></pre>
+        <p>Най-често пазим резултата в променлива:</p>
+        <pre><code class="language-csharp">string name = Console.ReadLine();</code></pre>
+        <pre><code>Изчакай човекът да напише нещо.
+Когато натисне Enter, вземи написания текст.
+Сложи го в променливата name.</code></pre>
+        <pre><code class="language-csharp">Console.WriteLine("Как се казваш?");
+string name = Console.ReadLine();
+
+Console.WriteLine("Здравей!");
+Console.WriteLine(name);</code></pre>
+
+        <h3>Входът е текст</h3>
+        <p><code>Console.ReadLine()</code> връща текст. Това е правилно:</p>
+        <pre><code class="language-csharp">string ageText = Console.ReadLine();</code></pre>
+        <p>Това не е правилно:</p>
+        <pre><code class="language-csharp">int age = Console.ReadLine();</code></pre>
+        <pre><code>Console.ReadLine() дава string.
+int очаква цяло число.</code></pre>
+      </section>
+
+      <section>
+        <h2>Визуално обяснение</h2>
+        <pre><code>[ клавиатура ]
+      |
+      v
+Console.ReadLine()
+      |
+      v
+[ string променлива ]</code></pre>
+        <pre><code>човекът пише: 15
+      |
+      v
+Console.ReadLine()
+      |
+      v
+ageText = "15"</code></pre>
+        <p>Ако ни трябва число, добавяме преобразуване:</p>
+        <pre><code>ageText = "15" -> int.Parse(ageText) -> age = 15</code></pre>
+        <pre><code>"15"   е текст
+15     е число</code></pre>
+      </section>
+
+      <section>
+        <h2>Първи пример</h2>
+        <pre><code class="language-csharp">Console.WriteLine("Как се казваш?");
+string name = Console.ReadLine();
+
+Console.WriteLine("Здравей!");
+Console.WriteLine(name);</code></pre>
+        <p>Примерно изпълнение:</p>
+        <pre><code>Как се казваш?
+Иво
+Здравей!
+Иво</code></pre>
+      </section>
+
+      <section>
+        <h2>Разбивка на кода</h2>
+        <pre><code class="language-csharp">Console.WriteLine("Как се казваш?");</code></pre>
+        <p>Това показва въпрос.</p>
+        <pre><code class="language-csharp">string name = Console.ReadLine();</code></pre>
+        <p>Това прочита отговора и го пази като текст.</p>
+        <pre><code class="language-csharp">Console.WriteLine(name);</code></pre>
+        <p>Това показва стойността, която човекът е въвел.</p>
+
+        <h3>Преобразуване към число</h3>
+        <pre><code class="language-csharp">Console.WriteLine("На колко години си?");
+string ageText = Console.ReadLine();
+int age = int.Parse(ageText);
+
+int nextYear = age + 1;
+
+Console.WriteLine("След една година ще си на:");
+Console.WriteLine(nextYear);</code></pre>
+        <p>Ако човекът въведе <code>15</code>, резултатът е <code>16</code>. В следващия урок ще разгледаме операторите по-спокойно.</p>
+
+        <h3>Преобразуване към дробно число</h3>
+        <pre><code class="language-csharp">Console.WriteLine("Въведи височина в метри:");
+string heightText = Console.ReadLine();
+double height = double.Parse(heightText);
+
+Console.WriteLine("Въведената височина е:");
+Console.WriteLine(height);</code></pre>
+        <p>В примерите от курса ще пишем дробни числа с точка, например <code>1.75</code>. Ако в твоята среда това не се приеме, пробвай със запетая: <code>1,75</code>. Засега не е нужно да помниш защо има разлика. Важното е идеята: текстът трябва да стане дробно число.</p>
+      </section>
+
+      <section>
+        <h2>Чести грешки</h2>
+        <h3>Опит да сложим текст директно в <code>int</code></h3>
+        <pre><code class="language-csharp">int age = Console.ReadLine();</code></pre>
+        <p>Поправка:</p>
+        <pre><code class="language-csharp">string ageText = Console.ReadLine();
+int age = int.Parse(ageText);</code></pre>
+
+        <h3>Преобразуване на дума към число</h3>
+        <pre><code class="language-csharp">string ageText = "петнадесет";
+int age = int.Parse(ageText);</code></pre>
+        <p><code>int.Parse</code> очаква текст, който изглежда като цяло число, например <code>"15"</code>.</p>
+
+        <h3>Кавички около името на променливата</h3>
+        <pre><code class="language-csharp">string ageText = "15";
+int age = int.Parse("ageText");</code></pre>
+        <p>Поправка:</p>
+        <pre><code class="language-csharp">int age = int.Parse(ageText);</code></pre>
+
+        <h3>Забравени скоби</h3>
+        <pre><code class="language-csharp">string name = Console.ReadLine;</code></pre>
+        <p>Поправка:</p>
+        <pre><code class="language-csharp">string name = Console.ReadLine();</code></pre>
+
+        <h3>Очакваме програмата да поправи входа сама</h3>
+        <p>Ако програмата пита за число, а човекът напише <code>много</code>, <code>int.Parse</code> няма да знае как да направи число от това. По-късно, когато учим условия, ще проверяваме входа по-внимателно.</p>
+      </section>
+
+      <section>
+        <h2>Как мисли програмистът</h2>
+        <pre><code>1. Какво трябва да попитам?
+2. Какво ще въведе човекът?
+3. Текст ли ми трябва, или число?
+4. Ако ми трябва число, кога ще преобразувам текста?
+5. Как ще използвам стойността?</code></pre>
+        <blockquote>Byte: "Първо слушам. После решавам дали текстът трябва да стане число."</blockquote>
+      </section>
+
+      <section>
+        <h2>Практика</h2>
+        <div class="practice-block">
+          <h3>Какво ще отпечата тази програма?</h3>
+          <p>Потребителят въвежда <code>Ива</code>.</p>
+          <pre><code class="language-csharp">Console.WriteLine("Име?");
+string name = Console.ReadLine();
+Console.WriteLine("Здравей!");
+Console.WriteLine(name);</code></pre>
+        </div>
+
+        <div class="practice-block">
+          <h3>Предвиди стойността</h3>
+          <p>Потребителят въвежда <code>14</code>. Каква е стойността на <code>nextYear</code>?</p>
+          <pre><code class="language-csharp">string ageText = Console.ReadLine();
+int age = int.Parse(ageText);
+int nextYear = age + 1;</code></pre>
+        </div>
+
+        <div class="practice-block">
+          <h3>Намери бъга</h3>
+          <pre><code class="language-csharp">Console.WriteLine("На колко години си?");
+int age = Console.ReadLine();
+
+Console.WriteLine(age);</code></pre>
+        </div>
+
+        <div class="practice-block">
+          <h3>Поправи кода</h3>
+          <pre><code class="language-csharp">Console.WriteLine("Колко точки имаш?");
+string pointsText = Console.ReadLine();
+int points = int.Parse("pointsText");
+
+Console.WriteLine("Точки:");
+Console.WriteLine("points");</code></pre>
+        </div>
+      </section>
+
+      <section>
+        <h2>Упражнения по трудност</h2>
+        <div class="difficulty">
+          <h3>⭐ Easy</h3>
+          <ol>
+            <li>Напиши програма, която пита за име и после го показва.</li>
+            <li>Напиши програма, която пита за град и после показва:</li>
+          </ol>
+          <pre><code>Твоят град е:
+...</code></pre>
+          <ol start="3">
+            <li>Напиши програма, която пита за възраст, но я пази като текст. Покажи въведената стойност.</li>
+            <li>Промени предишната програма така, че да преобразува възрастта към <code>int</code>.</li>
+          </ol>
+        </div>
+
+        <div class="difficulty">
+          <h3>⭐⭐ Medium</h3>
+          <ol>
+            <li>Напиши интерактивен профил. Попитай за име, хоби и любима игра. После покажи трите стойности.</li>
+            <li>Напиши програма, която пита за възраст и показва възрастта след една година.</li>
+            <li>Намери и поправи грешките:</li>
+          </ol>
+          <pre><code class="language-csharp">Console.WriteLine("Въведи ниво:");
+int level = Console.ReadLine();
+Console.WriteLine("level");</code></pre>
+        </div>
+
+        <div class="difficulty">
+          <h3>⭐⭐⭐ Hard</h3>
+          <ol>
+            <li>Напиши програма, която пита за височина в метри, преобразува я към <code>double</code> и я показва обратно.</li>
+            <li>Напиши програма "Точки на Byte": попитай за текущи точки, преобразувай ги към <code>int</code>, създай <code>newScore</code> с 10 повече и покажи <code>newScore</code>.</li>
+            <li>Обясни с човешки думи защо тези две стойности са различни:</li>
+          </ol>
+          <pre><code>"20"
+20</code></pre>
+        </div>
+
+        <div class="difficulty">
+          <h3>🧠 Challenge</h3>
+          <p>Направи интерактивен "Паспорт на Byte". Попитай за име на робот, ниво на батерията като цяло число, версия като дробно число и любима команда като текст. После покажи всички въведени стойности подредено.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>Мини проект</h2>
+        <h3>Интерактивна визитка</h3>
+        <p>Попитай за име, възраст, град, хоби и любимо число. Преобразувай възрастта и любимото число към <code>int</code>.</p>
+        <pre><code>+----------------------+
+| Интерактивна визитка |
++----------------------+
+Име:
+Мая
+Възраст:
+15
+Град:
+София
+Хоби:
+рисуване
+Любимо число:
+7
+Byte: Данните са записани.</code></pre>
+        <p>Планирай кои отговори са текст, кои трябва да станат <code>int</code> и в какъв ред ще покажеш резултата.</p>
+      </section>
+
+      <section>
+        <h2>Тест за самопроверка</h2>
+        <ol>
+          <li>Какво прави <code>Console.ReadLine()</code>?</li>
+          <li>Какъв тип стойност връща <code>Console.ReadLine()</code>?</li>
+          <li>Защо <code>int age = Console.ReadLine();</code> е проблем?</li>
+          <li>За какво служи <code>int.Parse</code>?</li>
+          <li>За какво служи <code>double.Parse</code>?</li>
+          <li>Каква е разликата между <code>"15"</code> и <code>15</code>?</li>
+          <li>Какво ще стане, ако <code>int.Parse</code> получи текст като <code>"Byte"</code>?</li>
+          <li>Защо засега приемаме, че потребителят въвежда правилни стойности?</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Обобщение</h2>
+        <p><code>Console.ReadLine()</code> чете един ред от клавиатурата. Входът първо идва като <code>string</code>. За числа използваме <code>int.Parse</code> или <code>double.Parse</code>.</p>
+        <pre><code>Входът от клавиатурата започва като текст.
+Преобразуваме го само когато ни трябва число.</code></pre>
+      </section>
+
+      <section>
+        <h2>Какво следва</h2>
+        <p>В следващия урок ще разгледаме оператори и изрази: събиране, изваждане, умножение, деление и по-ясни изчисления.</p>
+      </section>
+
+      <footer class="footer-nav">
+        Важни страници: <a href="../index.html">Начало</a>, <a href="../docs/curriculum.html">Програма</a>, <a href="../docs/glossary.html">Речник</a>.
+      </footer>
+    </article>
+  </main>
+</body>
+</html>

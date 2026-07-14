@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Урок 3: Променливи и типове данни</title>
+  <link rel="stylesheet" href="../assets/course.css">
+</head>
+<body>
+  <main class="page">
+    <nav class="top-nav" aria-label="Основна навигация">
+      <div class="top-nav-title">C# за начинаещи</div>
+      <div class="top-nav-links">
+        <a href="../index.html">Начало</a>
+        <a href="../docs/curriculum.html">Програма</a>
+        <a href="../docs/glossary.html">Речник</a>
+      </div>
+    </nav>
+
+    <article class="lesson">
+      <header class="lesson-header">
+        <div class="lesson-label">Урок 3</div>
+        <h1>Променливи и типове данни</h1>
+      </header>
+
+      <section>
+        <h2>Какво ще научиш</h2>
+        <ul>
+          <li>Какво е променлива.</li>
+          <li>Как да създадеш променлива за текст, цяло число и дробно число.</li>
+          <li>Как да разпознаваш тип, име и стойност.</li>
+          <li>Как да показваш и променяш стойност на променлива.</li>
+          <li>Как да избираш подходящ тип за прости данни.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Защо това е важно</h2>
+        <p>В Урок 2 програмите ни показваха готов текст. Сега започваме да пазим информация: име на играч, точки, температура, цена или съобщение.</p>
+        <p>Променливите са първата стъпка към програма, която използва данни, вместо само да показва предварително написани редове.</p>
+      </section>
+
+      <section>
+        <h2>История с Byte</h2>
+        <p>Byte подрежда малки кутии. На първата пише <code>name</code>, а вътре има <code>"Мая"</code>. На втората пише <code>score</code>, а вътре има <code>15</code>.</p>
+        <blockquote>Byte: "Когато кутията има име, мога да намеря стойността по-късно. Но трябва да знам и какъв вид стойност има вътре."</blockquote>
+        <p>Точно това правят променливите. Те са именувани места за пазене на стойности.</p>
+      </section>
+
+      <section>
+        <h2>Основно обяснение</h2>
+        <p>Променлива е именувано място за пазене на стойност.</p>
+        <pre><code class="language-csharp">string name = "Мая";</code></pre>
+        <ul>
+          <li><code>string</code> е типът данни. Той казва, че стойността е текст.</li>
+          <li><code>name</code> е името на променливата.</li>
+          <li><code>=</code> означава "сложи тази стойност в тази променлива".</li>
+          <li><code>"Мая"</code> е стойността.</li>
+          <li><code>;</code> завършва инструкцията.</li>
+        </ul>
+        <pre><code>сложи стойността отдясно в променливата отляво</code></pre>
+
+        <h3>Първите типове данни</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Тип</th>
+              <th>За какво служи</th>
+              <th>Пример</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>string</code></td>
+              <td>текст</td>
+              <td><code>"Иван"</code></td>
+            </tr>
+            <tr>
+              <td><code>int</code></td>
+              <td>цяло число</td>
+              <td><code>15</code></td>
+            </tr>
+            <tr>
+              <td><code>double</code></td>
+              <td>дробно число</td>
+              <td><code>22.5</code></td>
+            </tr>
+          </tbody>
+        </table>
+        <pre><code class="language-csharp">string city = "София";
+int age = 15;
+double temperature = 22.5;</code></pre>
+      </section>
+
+      <section>
+        <h2>Визуално обяснение</h2>
+        <pre><code>+----------------+
+| name           |
+| "Мая"          |
++----------------+
+
++----------------+
+| score          |
+| 15             |
++----------------+
+
++----------------+
+| temperature    |
+| 22.5           |
++----------------+</code></pre>
+        <p>Името е етикетът на кутията. Стойността е това, което е вътре. Типът казва какъв вид нещо очакваме вътре.</p>
+        <pre><code>[ тип ] [ име ] = [ стойност ];
+
+string  name    = "Мая";
+int     score   = 15;
+double  height  = 1.72;</code></pre>
+      </section>
+
+      <section>
+        <h2>Първи пример</h2>
+        <pre><code class="language-csharp">string robotName = "Byte";
+int batteryLevel = 87;
+double temperature = 22.5;
+
+Console.WriteLine("Име:");
+Console.WriteLine(robotName);
+
+Console.WriteLine("Батерия:");
+Console.WriteLine(batteryLevel);
+
+Console.WriteLine("Температура:");
+Console.WriteLine(temperature);</code></pre>
+        <p>Резултат:</p>
+        <pre><code>Име:
+Byte
+Батерия:
+87
+Температура:
+22.5</code></pre>
+        <p><code>Console.WriteLine(robotName);</code> показва стойността на променливата. <code>Console.WriteLine("robotName");</code> показва самия текст <code>robotName</code>.</p>
+      </section>
+
+      <section>
+        <h2>Разбивка на кода</h2>
+        <pre><code class="language-csharp">int batteryLevel = 87;</code></pre>
+        <p>Този ред създава променлива за цяло число, нарича я <code>batteryLevel</code> и слага вътре стойността <code>87</code>.</p>
+        <pre><code class="language-csharp">Console.WriteLine(batteryLevel);</code></pre>
+        <p>Този ред намира променливата, взема стойността вътре и я показва.</p>
+
+        <h3>Промяна на стойност</h3>
+        <pre><code class="language-csharp">int points = 10;
+Console.WriteLine(points);
+
+points = 15;
+Console.WriteLine(points);</code></pre>
+        <p>Резултат:</p>
+        <pre><code>10
+15</code></pre>
+        <p>Първия път създаваме променливата с <code>int</code>. Втория път само сменяме стойността, затова не пишем типа отново.</p>
+      </section>
+
+      <section>
+        <h2>Чести грешки</h2>
+        <h3>Текст без кавички</h3>
+        <pre><code class="language-csharp">string name = Byte;</code></pre>
+        <p>Поправка:</p>
+        <pre><code class="language-csharp">string name = "Byte";</code></pre>
+
+        <h3>Число като текст</h3>
+        <pre><code class="language-csharp">int age = "15";</code></pre>
+        <p><code>int</code> очаква цяло число, а <code>"15"</code> е текст.</p>
+        <pre><code class="language-csharp">int age = 15;</code></pre>
+
+        <h3>Дробно число с грешен тип</h3>
+        <pre><code class="language-csharp">int temperature = 22.5;</code></pre>
+        <p>Поправка:</p>
+        <pre><code class="language-csharp">double temperature = 22.5;</code></pre>
+
+        <h3>Използване преди създаване</h3>
+        <pre><code class="language-csharp">Console.WriteLine(score);
+int score = 20;</code></pre>
+        <p>Поправка:</p>
+        <pre><code class="language-csharp">int score = 20;
+Console.WriteLine(score);</code></pre>
+
+        <h3>Показване на името вместо стойността</h3>
+        <pre><code class="language-csharp">int score = 20;
+Console.WriteLine("score");</code></pre>
+        <p>За стойността махаме кавичките:</p>
+        <pre><code class="language-csharp">Console.WriteLine(score);</code></pre>
+      </section>
+
+      <section>
+        <h2>Как мисли програмистът</h2>
+        <p>Преди да създадеш променлива, попитай: каква информация пазя, какъв тип е тя, какво ясно име ще използвам и дали стойността ще се промени.</p>
+        <pre><code>Искам да пазя точки в игра.
+Точките са цяло число.
+Името score е кратко и ясно.</code></pre>
+        <pre><code class="language-csharp">int score = 0;</code></pre>
+        <blockquote>Byte: "Етикетът е ясен. Типът е ясен. Стойността е ясна. Мога да работя."</blockquote>
+      </section>
+
+      <section>
+        <h2>Практика</h2>
+        <div class="practice-block">
+          <h3>Какво ще отпечата тази програма?</h3>
+          <pre><code class="language-csharp">string playerName = "Ива";
+int points = 12;
+
+Console.WriteLine(playerName);
+Console.WriteLine(points);</code></pre>
+        </div>
+
+        <div class="practice-block">
+          <h3>Предвиди стойността</h3>
+          <p>Каква е стойността на <code>coins</code> накрая?</p>
+          <pre><code class="language-csharp">int coins = 5;
+coins = 8;
+coins = 10;</code></pre>
+        </div>
+
+        <div class="practice-block">
+          <h3>Намери бъга</h3>
+          <pre><code class="language-csharp">int age = "15";
+Console.WriteLine(age);</code></pre>
+        </div>
+
+        <div class="practice-block">
+          <h3>Поправи кода</h3>
+          <pre><code class="language-csharp">string player name = "Иво";
+int score = "20";
+
+Console.WriteLine("playerName");
+Console.WriteLine("score");</code></pre>
+          <p>Кодът трябва да покаже <code>Иво</code> и <code>20</code>.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>Упражнения по трудност</h2>
+        <div class="difficulty">
+          <h3>⭐ Easy</h3>
+          <ol>
+            <li>Създай променлива <code>favoriteGame</code> от тип <code>string</code> и сложи в нея името на любима игра. Покажи стойността в конзолата.</li>
+            <li>Създай променлива <code>age</code> от тип <code>int</code> и сложи в нея твоята възраст. Покажи стойността.</li>
+            <li>Избери подходящ тип за всяка стойност:</li>
+          </ol>
+          <pre><code>"Пловдив"
+14
+36.6</code></pre>
+          <p>Какво ще отпечата програмата?</p>
+          <pre><code class="language-csharp">string name = "Byte";
+Console.WriteLine("name");
+Console.WriteLine(name);</code></pre>
+        </div>
+
+        <div class="difficulty">
+          <h3>⭐⭐ Medium</h3>
+          <ol>
+            <li>Напиши програма "Профил", която пази и показва име, възраст и любимо хоби. Използвай три променливи.</li>
+            <li>Напиши програма "Състояние на робот" с <code>robotName</code>, <code>battery</code> и <code>version</code>. Покажи всяка стойност на отделен ред.</li>
+            <li>Предвиди изхода:</li>
+          </ol>
+          <pre><code class="language-csharp">int lives = 3;
+Console.WriteLine(lives);
+
+lives = 2;
+Console.WriteLine(lives);</code></pre>
+        </div>
+
+        <div class="difficulty">
+          <h3>⭐⭐⭐ Hard</h3>
+          <ol>
+            <li>Напиши "Табло с точки": покажи начални точки <code>0</code>, после смени <code>score</code> на <code>10</code> и покажи новата стойност.</li>
+            <li>Намери и поправи всички грешки:</li>
+          </ol>
+          <pre><code class="language-csharp">string city = София;
+int temperature = 21.5;
+double points = "10";
+
+Console.WriteLine("city");
+Console.WriteLine(temperature);
+Console.WriteLine(points);</code></pre>
+        </div>
+
+        <div class="difficulty">
+          <h3>🧠 Challenge</h3>
+          <p>Направи "Инвентар на Byte" с променливи за име на предмет, брой предмети, тегло на един предмет и кратко описание. Покажи всички стойности подредено.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>Мини проект</h2>
+        <h3>Карта на герой</h3>
+        <p>Направи малка конзолна карта на герой с променливи за име, ниво, точки, любимо умение и една дробна стойност.</p>
+        <pre><code>+----------------------+
+| Карта на герой       |
++----------------------+
+Име:
+Алекс
+Ниво:
+3
+Точки:
+120
+Умение:
+бързо мислене
+Височина:
+1.68</code></pre>
+        <p>Планирай кои стойности ти трябват, какъв тип има всяка и в какъв ред ще ги покажеш.</p>
+      </section>
+
+      <section>
+        <h2>Тест за самопроверка</h2>
+        <ol>
+          <li>Какво е променлива?</li>
+          <li>Какво е стойност?</li>
+          <li>Какво казва типът данни?</li>
+          <li>Кой тип би избрал за <code>"Мария"</code>?</li>
+          <li>Кой тип би избрал за <code>42</code>?</li>
+          <li>Кой тип би избрал за <code>3.14</code>?</li>
+          <li>Каква е разликата между <code>Console.WriteLine(score);</code> и <code>Console.WriteLine("score");</code>?</li>
+          <li>Защо не пишем типа отново, когато само сменяме стойността?</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Обобщение</h2>
+        <p>Променливата е именувано място за пазене на стойност. <code>string</code> пази текст, <code>int</code> пази цяло число, а <code>double</code> пази дробно число.</p>
+        <pre><code>Типът казва какво може да има в кутията,
+името казва как да я намерим,
+а стойността е това, което пазим вътре.</code></pre>
+      </section>
+
+      <section>
+        <h2>Какво следва</h2>
+        <p>В следващия урок ще позволим на човека да въвежда информация от клавиатурата.</p>
+      </section>
+
+      <footer class="footer-nav">
+        Важни страници: <a href="../index.html">Начало</a>, <a href="../docs/curriculum.html">Програма</a>, <a href="../docs/glossary.html">Речник</a>.
+      </footer>
+    </article>
+  </main>
+</body>
+</html>

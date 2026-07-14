@@ -25,157 +25,319 @@
 
       <section>
         <h2>Какво ще научиш</h2>
+        <p>До края на този урок ще можеш да:</p>
         <ul>
-          <li>Какво е конзолна програма.</li>
-          <li>Как да покажеш текст на екрана.</li>
-          <li>Какво прави <code>Console.WriteLine</code>.</li>
-          <li>Как да откриваш малки синтактични грешки.</li>
+          <li>разбереш какво е конзолна програма;</li>
+          <li>напишеш първата си C# инструкция;</li>
+          <li>покажеш текст на екрана;</li>
+          <li>прочетеш прост C# код отгоре надолу;</li>
+          <li>откриваш малки синтактични грешки;</li>
+          <li>променяш готова програма без страх.</li>
         </ul>
       </section>
 
       <section>
         <h2>Защо това е важно</h2>
-        <p>Ако можеш да покажеш текст, можеш да видиш какво прави програмата. Това е първата стъпка към тестване, мислене и поправяне на код.</p>
+        <p>В предишния урок мислехме като програмисти: стъпки, ред, точни инструкции.</p>
+        <p>Сега ще направим следващата крачка: ще дадем истинска инструкция на компютъра с C#.</p>
+        <p>Първата ни цел е малка:</p>
+        <pre><code>Кажи на програмата да покаже текст.</code></pre>
+        <p>Това може да изглежда просто, но е важна основа. Ако можеш да покажеш текст, можеш да видиш какво прави програмата. А когато виждаш какво прави програмата, можеш да мислиш, тестваш и поправяш.</p>
       </section>
 
       <section>
         <h2>История с Byte</h2>
-        <p>Byte получава първата истинска C# инструкция:</p>
-        <pre><code class="language-csharp">Console.WriteLine("Здравей, Byte!");</code></pre>
-        <blockquote>Byte: "Виждам точна инструкция. Има действие, скоби, текст в кавички и знак за край."</blockquote>
+        <p>Byte вече знае, че трябва да следва точни стъпки.</p>
+        <p>Днес му даваме първата истинска команда на C#:</p>
+        <pre><code class="language-csharp">Console.WriteLine(&quot;Здравей, Byte!&quot;);</code></pre>
+        <p>Byte я разглежда внимателно и казва:</p>
+        <blockquote>Byte: &quot;Виждам точна инструкция. Има име на действие, скоби, текст в кавички и знак за край. Това мога да изпълня.&quot;</blockquote>
+        <p>Точно така. C# има правила за писане. Тези правила се наричат синтаксис.</p>
+        <p>Синтаксисът е като правопис за компютъра. Ако липсва важен символ, компютърът може да не разбере какво искаме.</p>
       </section>
 
       <section>
         <h2>Основно обяснение</h2>
-        <p>Конзолата е текстов прозорец, в който програмата може да показва текст.</p>
+        <p>В този курс започваме с конзолни програми.</p>
+        <p>Конзолата е текстов прозорец. В него програмата може да показва текст и по-късно ще може да чете какво пише потребителят.</p>
+        <p>Можеш да си я представиш така:</p>
         <pre><code>+----------------------------------+
 | Конзола                          |
 |                                  |
 | Здравей, свят!                   |
 |                                  |
 +----------------------------------+</code></pre>
-        <p>Първата C# инструкция е:</p>
-        <pre><code class="language-csharp">Console.WriteLine("Здравей, свят!");</code></pre>
+        <p>Първата C# инструкция, която ще използваме, е:</p>
+        <pre><code class="language-csharp">Console.WriteLine(&quot;Здравей, свят!&quot;);</code></pre>
+        <p>Тя означава:</p>
+        <pre><code>Покажи ред текст в конзолата.</code></pre>
+        <p>Нека погледнем частите:</p>
         <ul>
-          <li><code>Console</code> е свързано с конзолата.</li>
-          <li><code>WriteLine</code> означава "напиши ред".</li>
-          <li>Текстът в кавички е това, което ще се покаже.</li>
-          <li><code>;</code> завършва инструкцията.</li>
+          <li><code>Console</code> е мястото, свързано с конзолата.</li>
+          <li><code>WriteLine</code> означава &quot;напиши ред&quot;.</li>
+          <li>Текстът между кавичките е това, което ще се покаже.</li>
+          <li><code>;</code> казва &quot;тази инструкция свършва тук&quot;.</li>
         </ul>
+        <p>Не е нужно още да знаеш всичко за <code>Console</code> и <code>WriteLine</code>. Засега ги приеми като готова команда за показване на текст.</p>
       </section>
 
       <section>
         <h2>Визуално обяснение</h2>
-        <pre><code>[ C# инструкция ] -> [ компютърът я изпълнява ] -> [ текст в конзолата ]</code></pre>
-        <pre><code>Console.WriteLine("Здравей!");
+        <p>Ето как мислим за първата програма:</p>
+        <pre><code>[ C# инструкция ] -&gt; [ компютърът я изпълнява ] -&gt; [ текст в конзолата ]</code></pre>
+        <p>С конкретен пример:</p>
+        <pre><code>Console.WriteLine(&quot;Здравей!&quot;);
           |
           v
 +----------------+
 | Здравей!       |
 +----------------+</code></pre>
+        <p>Ако имаме няколко инструкции, те се изпълняват отгоре надолу:</p>
+        <pre><code>Код:
+
+1. Покажи &quot;Старт&quot;
+2. Покажи &quot;Byte е готов&quot;
+3. Покажи &quot;Край&quot;
+
+Изход:
+
+Старт
+Byte е готов
+Край</code></pre>
+        <p>Редът на инструкциите е редът на резултата.</p>
       </section>
 
       <section>
         <h2>Първи пример</h2>
-        <pre><code class="language-csharp">Console.WriteLine("Здравей!");
-Console.WriteLine("Аз уча C#.");
-Console.WriteLine("Byte също е тук.");</code></pre>
+        <p>Ето първата ни малка C# програма:</p>
+        <pre><code class="language-csharp">Console.WriteLine(&quot;Здравей, свят!&quot;);</code></pre>
+        <p>Когато програмата се изпълни, в конзолата ще видиш:</p>
+        <pre><code>Здравей, свят!</code></pre>
+        <p>Можем да покажем и повече от един ред:</p>
+        <pre><code class="language-csharp">Console.WriteLine(&quot;Здравей!&quot;);
+Console.WriteLine(&quot;Аз уча C#.&quot;);
+Console.WriteLine(&quot;Byte също е тук.&quot;);</code></pre>
         <p>Резултат:</p>
         <pre><code>Здравей!
 Аз уча C#.
 Byte също е тук.</code></pre>
+        <p>Забележи нещо важно: всяко <code>Console.WriteLine(...)</code> показва нов ред.</p>
       </section>
 
       <section>
         <h2>Разбивка на кода</h2>
-        <pre><code class="language-csharp">Console.WriteLine("Здравей, Byte!");</code></pre>
+        <p>Нека разгледаме тази инструкция:</p>
+        <pre><code class="language-csharp">Console.WriteLine(&quot;Здравей, Byte!&quot;);</code></pre>
+        <p>Разбивка:</p>
         <ul>
           <li><code>Console</code> казва, че работим с конзолата.</li>
-          <li><code>.</code> свързва <code>Console</code> с <code>WriteLine</code>.</li>
-          <li><code>"Здравей, Byte!"</code> е текстът за показване.</li>
-          <li><code>;</code> казва, че инструкцията свършва.</li>
+          <li><code>.</code> свързва <code>Console</code> с действието <code>WriteLine</code>.</li>
+          <li><code>WriteLine</code> е действието: напиши ред.</li>
+          <li><code>(</code> и <code>)</code> ограждат това, което подаваме на действието.</li>
+          <li><code>&quot;Здравей, Byte!&quot;</code> е текстът, който ще се покаже.</li>
+          <li><code>;</code> завършва инструкцията.</li>
         </ul>
+        <p>Можем да го видим така:</p>
+        <pre><code>+---------+    +-----------+    +-------------------+
+| Console | -&gt; | WriteLine | -&gt; | &quot;Здравей, Byte!&quot;  |
++---------+    +-----------+    +-------------------+
+                                      |
+                                      v
+                              показва се в конзолата</code></pre>
+        <p>Най-важните символи за този урок са:</p>
+        <pre><code>&quot; &quot;   кавички около текста
+( )   скоби около това, което WriteLine получава
+;     край на инструкцията</code></pre>
+        <p>Byte ги харесва, защото му казват точно къде започва и къде свършва всяка част.</p>
       </section>
 
       <section>
         <h2>Чести грешки</h2>
-        <h3>Липсваща точка и запетая</h3>
-        <pre><code class="language-csharp">Console.WriteLine("Здравей")</code></pre>
+        <h3>Грешка 1: Липсваща точка и запетая</h3>
+        <pre><code class="language-csharp">Console.WriteLine(&quot;Здравей&quot;)</code></pre>
+        <p>Защо е проблем:</p>
+        <p>C# очаква <code>;</code> в края на инструкцията.</p>
         <p>Поправка:</p>
-        <pre><code class="language-csharp">Console.WriteLine("Здравей");</code></pre>
-
-        <h3>Липсваща кавичка</h3>
-        <pre><code class="language-csharp">Console.WriteLine("Здравей);</code></pre>
+        <pre><code class="language-csharp">Console.WriteLine(&quot;Здравей&quot;);</code></pre>
+        <h3>Грешка 2: Липсваща кавичка</h3>
+        <pre><code class="language-csharp">Console.WriteLine(&quot;Здравей);</code></pre>
+        <p>Защо е проблем:</p>
+        <p>Текстът започва с кавичка, но не завършва с кавичка. Компютърът не знае къде свършва текстът.</p>
         <p>Поправка:</p>
-        <pre><code class="language-csharp">Console.WriteLine("Здравей");</code></pre>
-
-        <h3>Грешни главни и малки букви</h3>
-        <pre><code class="language-csharp">console.writeline("Здравей");</code></pre>
-        <p>C# прави разлика между главни и малки букви.</p>
+        <pre><code class="language-csharp">Console.WriteLine(&quot;Здравей&quot;);</code></pre>
+        <h3>Грешка 3: Текст без кавички</h3>
+        <pre><code class="language-csharp">Console.WriteLine(Здравей);</code></pre>
+        <p>Защо е проблем:</p>
+        <p>Когато искаме да покажем текст, го слагаме в кавички.</p>
+        <p>Поправка:</p>
+        <pre><code class="language-csharp">Console.WriteLine(&quot;Здравей&quot;);</code></pre>
+        <h3>Грешка 4: Объркани малки и главни букви</h3>
+        <pre><code class="language-csharp">console.writeline(&quot;Здравей&quot;);</code></pre>
+        <p>Защо е проблем:</p>
+        <p>C# прави разлика между главни и малки букви. <code>Console.WriteLine</code> трябва да бъде написано точно.</p>
+        <p>Поправка:</p>
+        <pre><code class="language-csharp">Console.WriteLine(&quot;Здравей&quot;);</code></pre>
+        <h3>Грешка 5: Очакваме програмата да промени текста сама</h3>
+        <pre><code class="language-csharp">Console.WriteLine(&quot;Кажи нещо интересно&quot;);</code></pre>
+        <p>Защо е проблем:</p>
+        <p>Компютърът няма да измисли интересно съобщение. Той ще покаже точно текста между кавичките.</p>
+        <p>Резултат:</p>
+        <pre><code>Кажи нещо интересно</code></pre>
+        <p>Byte би казал:</p>
+        <blockquote>Byte: &quot;Текстът беше инструкция за мен само ако е извън кавичките. В кавичките е нещо за показване.&quot;</blockquote>
       </section>
 
       <section>
         <h2>Как мисли програмистът</h2>
-        <pre><code>прочети -> предвиди -> стартирай -> сравни</code></pre>
-        <p>Преди да стартираш код, опитай да предвидиш какво ще покаже.</p>
+        <p>Когато видиш C# код, не бързай да го стартираш.</p>
+        <p>Първо го прочети като инструкции:</p>
+        <pre><code class="language-csharp">Console.WriteLine(&quot;Едно&quot;);
+Console.WriteLine(&quot;Две&quot;);
+Console.WriteLine(&quot;Три&quot;);</code></pre>
+        <p>Мисленето може да бъде:</p>
+        <pre><code>1. Първата инструкция показва &quot;Едно&quot;.
+2. Втората инструкция показва &quot;Две&quot;.
+3. Третата инструкция показва &quot;Три&quot;.
+4. Значи изходът ще бъде три реда.</code></pre>
+        <p>После можеш да сравниш предположението си с реалния резултат.</p>
+        <p>Това е много ценен навик:</p>
+        <pre><code>прочети -&gt; предвиди -&gt; стартирай -&gt; сравни</code></pre>
+        <p>Ако резултатът е различен, това не е провал. Това е следа.</p>
       </section>
 
       <section>
         <h2>Практика</h2>
-        <div class="practice-block">
-          <h3>Какво ще отпечата тази програма?</h3>
-          <pre><code class="language-csharp">Console.WriteLine("Старт");
-Console.WriteLine("Byte проверява инструкциите.");
-Console.WriteLine("Готово");</code></pre>
-        </div>
-
-        <div class="practice-block">
-          <h3>Намери бъга</h3>
-          <pre><code class="language-csharp">Console.WriteLine("Здравей, Byte!")
-Console.WriteLine("Добре дошъл.");</code></pre>
-        </div>
-
-        <div class="practice-block">
-          <h3>Поправи кода</h3>
-          <pre><code class="language-csharp">Console.WriteLine(Аз уча C#.);
-Console.WriteLine("Това е първата ми програма.)</code></pre>
-        </div>
+        <h3>Какво ще отпечата тази програма?</h3>
+        <pre><code class="language-csharp">Console.WriteLine(&quot;Старт&quot;);
+Console.WriteLine(&quot;Byte проверява инструкциите.&quot;);
+Console.WriteLine(&quot;Готово&quot;);</code></pre>
+        <p>Твоето предположение:</p>
+        <pre><code>...</code></pre>
+        <p>Провери реда. Програмата чете отгоре надолу.</p>
+        <h3>Намери бъга</h3>
+        <pre><code class="language-csharp">Console.WriteLine(&quot;Здравей, Byte!&quot;)
+Console.WriteLine(&quot;Добре дошъл.&quot;);</code></pre>
+        <p>Какъв е проблемът?</p>
+        <p>Подсказка:</p>
+        <p>Първата инструкция не е завършена както C# очаква.</p>
+        <h3>Поправи кода</h3>
+        <p>Програмата трябва да покаже:</p>
+        <pre><code>Аз уча C#.
+Това е първата ми програма.</code></pre>
+        <p>Но кодът има грешки:</p>
+        <pre><code class="language-csharp">Console.WriteLine(Аз уча C#.);
+Console.WriteLine(&quot;Това е първата ми програма.)</code></pre>
+        <p>Поправи кода така, че текстът да се покаже правилно.</p>
       </section>
 
       <section>
         <h2>Упражнения по трудност</h2>
-        <div class="difficulty">
-          <h3>⭐ Easy</h3>
-          <ol>
-            <li>Напиши инструкция, която показва <code>Здравей!</code>.</li>
-            <li>Промени текста така, че програмата да показва твоето име.</li>
-            <li>Предвиди изхода на три поредни <code>Console.WriteLine</code> инструкции.</li>
-          </ol>
-        </div>
-        <div class="difficulty">
-          <h3>⭐⭐ Medium</h3>
-          <ol>
-            <li>Напиши програма с 4 реда, която показва кратка визитка.</li>
-            <li>Подреди три инструкции така, че да покажат "Първо", "После", "Накрая".</li>
-          </ol>
-        </div>
-        <div class="difficulty">
-          <h3>⭐⭐⭐ Hard</h3>
-          <ol>
-            <li>Напиши програма, която показва малка ASCII картичка.</li>
-            <li>Предвиди изхода на програма с 4 реда, без да я стартираш.</li>
-          </ol>
-        </div>
-        <div class="difficulty">
-          <h3>🧠 Challenge</h3>
-          <p>Направи конзолна мини история с поне 6 реда и Byte.</p>
-        </div>
+        <h3>⭐ Easy</h3>
+        <ol>
+          <li>Напиши инструкция, която показва:</li>
+        </ol>
+        <pre><code>Здравей!</code></pre>
+        <ol start="2">
+          <li>Промени текста така, че програмата да показва твоето име.</li>
+        </ol>
+        <p>Примерен резултат:</p>
+        <pre><code>Казвам се Иван.</code></pre>
+        <ol start="3">
+          <li>Какво ще отпечата програмата?</li>
+        </ol>
+        <pre><code class="language-csharp">Console.WriteLine(&quot;A&quot;);
+Console.WriteLine(&quot;B&quot;);
+Console.WriteLine(&quot;C&quot;);</code></pre>
+        <ol start="4">
+          <li>Коя инструкция е написана правилно?</li>
+        </ol>
+        <pre><code class="language-csharp">A) Console.WriteLine(&quot;Byte&quot;);
+B) Console.WriteLine(Byte);
+C) console.WriteLine(&quot;Byte&quot;);</code></pre>
+        <p>Обясни защо.</p>
+        <h3>⭐⭐ Medium</h3>
+        <ol>
+          <li>Напиши програма с 4 реда, която показва кратка визитка:</li>
+        </ol>
+        <pre><code>Име: ...
+Възраст: ...
+Хоби: ...
+Любима игра: ...</code></pre>
+        <p>Засега напиши информацията направо в текста. Не използвай променливи.</p>
+        <ol start="2">
+          <li>Подреди инструкциите така, че резултатът да бъде:</li>
+        </ol>
+        <pre><code>Първо
+После
+Накрая</code></pre>
+        <p>Инструкции:</p>
+        <pre><code class="language-csharp">Console.WriteLine(&quot;Накрая&quot;);
+Console.WriteLine(&quot;Първо&quot;);
+Console.WriteLine(&quot;После&quot;);</code></pre>
+        <ol start="3">
+          <li>Намери и поправи всички грешки:</li>
+        </ol>
+        <pre><code class="language-csharp">console.WriteLine(&quot;Старт&quot;);
+Console.WriteLine(&quot;Byte казва здравей)
+Console.WriteLine(Край);</code></pre>
+        <h3>⭐⭐⭐ Hard</h3>
+        <ol>
+          <li>Напиши програма, която показва малка ASCII картичка.</li>
+        </ol>
+        <p>Пример:</p>
+        <pre><code>+----------------+
+| Здравей, Byte! |
++----------------+</code></pre>
+        <p>Подсказка:</p>
+        <p>Всеки ред от картичката може да бъде отделна <code>Console.WriteLine(...)</code> инструкция.</p>
+        <ol start="2">
+          <li>Предвиди изхода, без да стартираш програмата:</li>
+        </ol>
+        <pre><code class="language-csharp">Console.WriteLine(&quot;1. Вземи чаша&quot;);
+Console.WriteLine(&quot;2. Налей вода&quot;);
+Console.WriteLine(&quot;3. Изпий водата&quot;);
+Console.WriteLine(&quot;Byte изпълни точно инструкциите.&quot;);</code></pre>
+        <p>После обясни защо изходът има точно този ред.</p>
+        <h3>🧠 Challenge</h3>
+        <ol>
+          <li>Направи конзолна &quot;мини история&quot; с поне 6 реда.</li>
+        </ol>
+        <p>Историята трябва да включва Byte и една много буквална инструкция.</p>
+        <p>Примерна идея:</p>
+        <pre><code>Byte получи задача.
+Задачата беше: &quot;Подреди стаята.&quot;
+Byte попита: &quot;Кой предмет първо?&quot;
+...</code></pre>
+        <p>Не използвай променливи, условия или цикли. Само няколко <code>Console.WriteLine(...)</code> инструкции.</p>
       </section>
 
       <section>
         <h2>Мини проект</h2>
         <h3>Конзолна визитка</h3>
-        <p>Направи програма, която показва име, възраст, хоби, нещо, което искаш да научиш, и кратко съобщение от Byte.</p>
+        <p>Направи първата си малка завършена програма: конзолна визитка.</p>
+        <p>Програмата трябва да покаже:</p>
+        <ul>
+          <li>име;</li>
+          <li>възраст;</li>
+          <li>хоби;</li>
+          <li>нещо, което искаш да научиш;</li>
+          <li>кратко съобщение от Byte.</li>
+        </ul>
+        <p>Примерен резултат:</p>
+        <pre><code>+------------------------+
+| Моята визитка          |
++------------------------+
+Име: Иван
+Възраст: 15
+Хоби: рисуване
+Искам да науча: C#
+Byte: Инструкциите са ясни.</code></pre>
+        <p>Преди да пишеш код, планирай:</p>
+        <pre><code>1. Какво искам да се покаже на първия ред?
+2. Какво искам да се покаже на втория ред?
+3. Колко Console.WriteLine инструкции ми трябват?
+4. Има ли всеки текст кавички?
+5. Има ли всяка инструкция точка и запетая?</code></pre>
       </section>
 
       <section>
@@ -184,19 +346,42 @@ Console.WriteLine("Това е първата ми програма.)</code></pr
           <li>Какво е конзола?</li>
           <li>Какво прави <code>Console.WriteLine</code>?</li>
           <li>Защо текстът трябва да бъде в кавички?</li>
-          <li>За какво служи <code>;</code>?</li>
+          <li>За какво служи <code>;</code> в края на инструкцията?</li>
           <li>Какво ще стане, ако напишеш <code>console</code> вместо <code>Console</code>?</li>
+          <li>В какъв ред се изпълняват тези инструкции?</li>
+        </ol>
+        <pre><code class="language-csharp">Console.WriteLine(&quot;Първи ред&quot;);
+Console.WriteLine(&quot;Втори ред&quot;);</code></pre>
+        <ol start="7">
+          <li>Къде е грешката?</li>
+        </ol>
+        <pre><code class="language-csharp">Console.WriteLine(&quot;Здравей);</code></pre>
+        <ol start="8">
+          <li>Как би обяснил на Byte разликата между инструкция и текст в кавички?</li>
         </ol>
       </section>
 
       <section>
         <h2>Обобщение</h2>
-        <p><code>Console.WriteLine</code> показва един ред текст. C# има точен синтаксис, а програмата изпълнява инструкциите отгоре надолу.</p>
+        <p>В този урок научи:</p>
+        <ul>
+          <li>конзолната програма показва текст в текстов прозорец;</li>
+          <li><code>Console.WriteLine</code> показва един ред текст;</li>
+          <li>C# има точен синтаксис;</li>
+          <li>текстът за показване се пише в кавички;</li>
+          <li>инструкцията завършва с <code>;</code>;</li>
+          <li>програмата изпълнява инструкциите отгоре надолу;</li>
+          <li>преди стартиране е полезно да предвидиш резултата.</li>
+        </ul>
+        <p>Най-важната идея:</p>
+        <pre><code>Кодът е точна инструкция, а текстът в кавички е това, което ще се покаже.</code></pre>
       </section>
 
       <section>
         <h2>Какво следва</h2>
-        <p>В следващия урок ще научим как програмата пази информация с променливи.</p>
+        <p>В следващия урок ще научим как програмата може да пази информация.</p>
+        <p>Това ще стане с променливи: малки именувани &quot;кутии&quot;, в които можем да сложим стойности като име, възраст или точки в игра.</p>
+        <p>Сега вече можеш да направиш първата си C# програма, която показва текст. Малка стъпка, но истинска.</p>
       </section>
 
       <footer class="footer-nav">
