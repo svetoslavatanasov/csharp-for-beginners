@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Урок 5: Оператори и изрази</title>
+  <link rel="stylesheet" href="../assets/course.css">
+  <script>
+    (function () {
+      var version = Date.now().toString();
+
+      function versionedUrl(href) {
+        try {
+          var url = new URL(href, window.location.href);
+          if (url.origin !== window.location.origin) {
+            return href;
+          }
+          url.searchParams.set("v", version);
+          return url.href;
+        } catch (error) {
+          return href;
+        }
+      }
+
+      function applyCacheBusting() {
+        document.querySelectorAll("link[rel=\"stylesheet\"][href]").forEach(function (link) {
+          link.setAttribute("href", versionedUrl(link.getAttribute("href")));
+        });
+
+        document.querySelectorAll("a[href]").forEach(function (link) {
+          var href = link.getAttribute("href");
+          if (/\.html(?:$|[?#])/.test(href)) {
+            link.setAttribute("href", versionedUrl(href));
+          }
+        });
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", applyCacheBusting);
+      } else {
+        applyCacheBusting();
+      }
+    }());
+  </script>
+</head>
+<body>
+  <main class="page">
+    <nav class="top-nav" aria-label="Основна навигация">
+      <div class="top-nav-title">C# за начинаещи</div>
+      <div class="top-nav-links">
+        <a href="../index.html">Начало</a>
+        <a href="../docs/curriculum.html">Програма</a>
+        <a href="../docs/glossary.html">Речник</a>
+      </div>
+    </nav>
+
+    <article class="lesson">
+      <header class="lesson-header">
+        <div class="lesson-label">Урок 5</div>
+        <h1>Оператори и изрази</h1>
+      </header>
+
+      <section>
+        <h2>Какво ще научиш</h2>
+        <p>До края на този урок ще можеш да:</p>
+        <ul>
+          <li>използваш аритметичните оператори <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code> и <code>%</code>;</li>
+          <li>разбереш защо <code>7 / 2</code> дава <code>3</code>, а <code>7 / 2.0</code> дава <code>3.5</code>;</li>
+          <li>подреждаш изчисленията с приоритет и скоби;</li>
+          <li>променяш променлива спрямо старата й стойност с <code>score = score + 10</code> и <code>score += 10</code>;</li>
+          <li>слепваш текст и числа в едно изречение с <code>+</code>;</li>
+          <li>пишеш коментари, които обясняват кода.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Защо това е важно</h2>
+        <p>В Урок 4 програмите ни се научиха да слушат. Сега ще ги научим да смятат.</p>
+        <p>Почти всяка истинска програма смята нещо:</p>
+        <ul>
+          <li>точки в игра;</li>
+          <li>цени в магазин;</li>
+          <li>време до края на часа;</li>
+          <li>колко бонбона остават, след като ги разделим.</li>
+        </ul>
+        <p>Всяка такава сметка в C# е израз. Изразът е "сметка", която C# изчислява до една стойност. Например <code>7 + 2</code> е израз, а стойността му е <code>9</code>. Един израз вече видя в Урок 4: <code>age + 1</code>.</p>
+        <p>Знакът <code>+</code> в този израз е оператор. Операторът е символ, който казва какво действие да се направи със стойностите: да се съберат, да се извадят, да се умножат и така нататък.</p>
+        <p>Има и още една добра новина. Досега показвахме етикета, например <code>Точки:</code>, и стойността на два отделни реда. Отсега ще можем да ги покажем на един ред: <code>Точки: 15</code>.</p>
+      </section>
+
+      <section>
+        <h2>История с Byte</h2>
+        <p>Byte има кутия със 7 бисквитки. На гости идват двама приятели и Byte иска да раздели бисквитките честно.</p>
+        <p>Той брои внимателно и обявява:</p>
+        <blockquote>Byte: "Всеки получава по 3."</blockquote>
+        <p>Приятелите се споглеждат. Единият смята наум: 7 делено на 2 е 3.5. После пита: "А къде е половинката?"</p>
+        <p>Byte отваря кутията и показва:</p>
+        <blockquote>Byte: "Делих цели бисквитки. Не чупя бисквитки на половинки. Всеки получи по 3, а една остана в кутията."</blockquote>
+        <p>Byte не е сбъркал. Той е делил с цели числа. Това, което направи, има имена:</p>
+        <ul>
+          <li>целочислено деление: делим цели числа и дробната част се губи; 7 делено на 2 дава 3;</li>
+          <li>остатък при деление: това, което остава неразделено; тук остава 1 бисквитка.</li>
+        </ul>
+        <p>C# дели цели числа точно като Byte. В този урок ще видиш как да получиш и 3, и 1, и 3.5.</p>
+      </section>
+
+      <section>
+        <h2>Основно обяснение</h2>
+        <h3>Аритметични оператори</h3>
+        <p>Аритметичните оператори са знаците за сметки с числа:</p>
+        <table>
+          <thead>
+            <tr><th>Оператор</th><th>Действие</th><th>Пример</th><th>Резултат</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>+</code></td><td>събиране</td><td><code>7 + 2</code></td><td><code>9</code></td></tr>
+            <tr><td><code>-</code></td><td>изваждане</td><td><code>7 - 2</code></td><td><code>5</code></td></tr>
+            <tr><td><code>*</code></td><td>умножение</td><td><code>7 * 2</code></td><td><code>14</code></td></tr>
+            <tr><td><code>/</code></td><td>деление</td><td><code>7 / 2</code></td><td><code>3</code></td></tr>
+            <tr><td><code>%</code></td><td>остатък при деление</td><td><code>7 % 2</code></td><td><code>1</code></td></tr>
+          </tbody>
+        </table>
+        <p>В C# умножението се пише със звездичка <code>*</code>, а делението с наклонена черта <code>/</code>. Знакът <code>%</code> тук не означава процент. Той дава остатъка при деление.</p>
+        <p>Нека пробваме всички в една програма:</p>
+        <pre><code class="language-csharp">Console.WriteLine(7 + 2);
+Console.WriteLine(7 - 2);
+Console.WriteLine(7 * 2);
+Console.WriteLine(7 / 2);
+Console.WriteLine(7 % 2);</code></pre>
+        <p>Резултат:</p>
+        <pre><code>9
+5
+14
+3
+1</code></pre>
+        <p>Забележи, че в скобите няма кавички. Затова C# не показва текста <code>7 + 2</code>, а първо изчислява израза и показва стойността му.</p>
+        <p>Първите три реда дават познатите резултати. Но <code>7 / 2</code> дава <code>3</code>, точно както при Byte.</p>
+
+        <h3>Деление на цели числа</h3>
+        <p>Когато и двете числа са цели (<code>int</code>), C# прави целочислено деление: дели и изхвърля дробната част. Не закръгля. <code>7 / 2</code> е <code>3</code>, а не <code>4</code>.</p>
+        <p>Ако ти трябва дробен резултат, поне едното число трябва да е дробно (<code>double</code>). Достатъчно е да напишеш <code>2.0</code> вместо <code>2</code> или <code>7.0</code> вместо <code>7</code>. Запомни правилото: ако поне едното число е <code>double</code>, резултатът е <code>double</code>.</p>
+        <pre><code class="language-csharp">Console.WriteLine(7 / 2);
+Console.WriteLine(7 / 2.0);
+Console.WriteLine(7.0 / 2);
+Console.WriteLine(17 % 5);</code></pre>
+        <p>Резултат:</p>
+        <pre><code>3
+3.5
+3.5
+2</code></pre>
+        <p>В първия ред и двете числа са цели, затова виждаме <code>3</code>. Във втория и третия ред едното число е <code>double</code> и получаваме <code>3.5</code>. Последният ред използва <code>%</code>. Защо дава <code>2</code>, ще видиш в следващата част.</p>
+        <p>На компютър с български настройки може да видиш <code>3,5</code> вместо <code>3.5</code>. Това е същото число, само е изписано със запетая. Както в Урок 4, това зависи от настройките на компютъра.</p>
+
+        <h3>Остатък при деление</h3>
+        <p>Операторът <code>%</code> дава остатъка при деление. Остатъкът е това, което остава, след като разделим нещо на равни цели части.</p>
+        <p>Да вземем 17 бонбона и 5 приятели:</p>
+        <ul>
+          <li>всеки получава по 3 бонбона, защото <code>17 / 5</code> е <code>3</code>;</li>
+          <li>раздадени са 15 бонбона, защото <code>5 * 3</code> е <code>15</code>;</li>
+          <li>остават 2 бонбона, защото <code>17 % 5</code> е <code>2</code>.</li>
+        </ul>
+        <p>Ако числото се дели без остатък, <code>%</code> дава <code>0</code>. Например <code>10 % 5</code> е <code>0</code>: 10 бонбона стигат точно за 5 приятели, по 2 на всеки.</p>
+
+        <h3>Приоритет и скоби</h3>
+        <p>Когато в един израз има няколко оператора, C# не смята просто отляво надясно. Някои действия имат предимство. Това се нарича приоритет.</p>
+        <p>Правилата са същите като в математиката:</p>
+        <ul>
+          <li><code>*</code>, <code>/</code> и <code>%</code> се изчисляват преди <code>+</code> и <code>-</code>;</li>
+          <li>действия с еднакъв приоритет се изчисляват отляво надясно;</li>
+          <li>това, което е в скоби, се изчислява първо.</li>
+        </ul>
+        <pre><code class="language-csharp">Console.WriteLine(2 + 3 * 4);
+Console.WriteLine((2 + 3) * 4);
+Console.WriteLine((5 + 6) / 2.0);</code></pre>
+        <p>Резултат:</p>
+        <pre><code>14
+20
+5.5</code></pre>
+        <p>В първия ред умножението е първо: <code>3 * 4</code> е <code>12</code>, после <code>2 + 12</code> е <code>14</code>. Във втория ред скобите казват "първо събери": <code>2 + 3</code> е <code>5</code>, после <code>5 * 4</code> е <code>20</code>.</p>
+        <p>Третият ред пресмята средно аритметично на 5 и 6. Средното аритметично е сборът на числата, разделен на броя им. Скобите карат C# първо да събере, а <code>2.0</code> дава дробния резултат <code>5.5</code>.</p>
+        <p>Ако не си сигурен в какъв ред ще се изчисли нещо, сложи скоби. Така редът е ясен и за C#, и за теб.</p>
+
+        <h3>Нова стойност от старата</h3>
+        <p>В Урок 3 сменяхме стойността на променлива с нова: <code>points = 15;</code>. Често обаче новата стойност зависи от старата. Играчът има 5 точки и печели още 10. В C# това се пише така: <code>score = score + 10;</code></p>
+        <p>В математиката този ред изглежда странно. Как <code>score</code> да е равно на <code>score + 10</code>? Но помниш ли, че в C# <code>=</code> не значи "равно е"? То значи "сложи стойността отдясно в променливата отляво".</p>
+        <p>C# първо изчислява дясната страна със старата стойност: <code>5 + 10</code> е <code>15</code>. Чак после записва резултата обратно в <code>score</code>.</p>
+        <p>Това се прави толкова често, че има кратък запис: <code>score += 10;</code> означава същото като <code>score = score + 10;</code>. А <code>score -= 3;</code> означава <code>score = score - 3;</code>.</p>
+        <pre><code class="language-csharp">int score = 5;
+score = score + 10;
+Console.WriteLine(score);
+score += 10;
+Console.WriteLine(score);
+score -= 3;
+Console.WriteLine(score);</code></pre>
+        <p>Резултат:</p>
+        <pre><code>15
+25
+22</code></pre>
+        <p>Има и <code>*=</code> и <code>/=</code>. Те умножават и делят по същия начин. Най-често обаче ще ти трябват <code>+=</code> и <code>-=</code>.</p>
+
+        <h3>Слепване на текст</h3>
+        <p>Операторът <code>+</code> има още една работа. Когато от едната му страна има текст, той не събира, а слепва. Слепване на текст значи да свържем текстове и стойности един след друг в един общ текст.</p>
+        <p>Така етикетът и стойността излизат на един ред:</p>
+        <pre><code class="language-csharp">int score = 15;
+Console.WriteLine("Точки: " + score);
+Console.WriteLine("5" + 3);
+Console.WriteLine("Сбор: " + 2 + 3);
+Console.WriteLine("Сбор: " + (2 + 3));</code></pre>
+        <p>Резултат:</p>
+        <pre><code>Точки: 15
+53
+Сбор: 23
+Сбор: 5</code></pre>
+        <p>Първият ред е това, което искахме: етикет и стойност на един ред. Забележи интервала след двоеточието в <code>"Точки: "</code>. Без него ще видиш <code>Точки:15</code>.</p>
+        <p>Другите три реда крият капани. C# чете израза отляво надясно. Щом срещне текст, <code>+</code> слепва:</p>
+        <ul>
+          <li><code>"5" + 3</code>: <code>"5"</code> е текст, защото е в кавички. Затова <code>3</code> се залепя след него и излиза <code>53</code>.</li>
+          <li><code>"Сбор: " + 2 + 3</code>: първо <code>"Сбор: " + 2</code> дава текста <code>"Сбор: 2"</code>. После <code>3</code> се залепя след него и излиза <code>Сбор: 23</code>.</li>
+          <li><code>"Сбор: " + (2 + 3)</code>: скобите се изчисляват първо. <code>2 + 3</code> е <code>5</code> и чак после <code>5</code> се залепя към текста.</li>
+        </ul>
+        <p>Когато показваш сметка в текст, сложи сметката в скоби.</p>
+
+        <h3>Коментари</h3>
+        <p>Коментарът е бележка в кода за хората. Компютърът я пропуска. С коментар можеш да обясниш например откъде идва едно число.</p>
+        <p>В C# коментарът започва с <code>//</code> и продължава до края на реда. Може да е на отделен ред или след кода на същия ред:</p>
+        <pre><code class="language-csharp">// Byte пресмята колко бисквитки остават.
+int cookies = 7;
+int left = cookies % 2; // 1, защото 7 = 2 * 3 + 1
+Console.WriteLine(left);</code></pre>
+        <p>Резултат:</p>
+        <pre><code>1</code></pre>
+        <p>Коментарите не се изпълняват и не променят резултата. Те помагат на човека, който чете кода. Често този човек си ти след една седмица.</p>
+        <p>Добрият коментар обяснява нещо, което не се вижда веднага от кода. Не е нужно да коментираш всеки ред.</p>
+      </section>
+
+      <section>
+        <h2>Визуално обяснение</h2>
+        <p>C# изчислява израза стъпка по стъпка, докато остане една стойност:</p>
+        <pre><code>2 + 3 * 4
+2 + 12        &lt;- първо умножението
+14            &lt;- после събирането</code></pre>
+        <p>С всяка стъпка изразът става по-кратък. Когато остане една стойност, сметката е готова.</p>
+        <p>Ето и бисквитките на Byte:</p>
+        <pre><code>7 бисквитки за 2 приятели
+
+[*][*][*]   [*][*][*]   [*]
+приятел 1   приятел 2   остава
+
+7 / 2 = 3   (по колко получава всеки)
+7 % 2 = 1   (колко остават)</code></pre>
+        <p><code>/</code> отговаря на въпроса "по колко?", а <code>%</code> на въпроса "колко остават?".</p>
+        <p>А ето какво става с кутията <code>score</code>:</p>
+        <pre><code>преди:                 след score = score + 10;
++---------+            +---------+
+| score   |            | score   |
+| 5       |  -------&gt;  | 15      |
++---------+            +---------+
+
+1. Взимам старата стойност: 5.
+2. Изчислявам дясната страна: 5 + 10 = 15.
+3. Слагам резултата обратно в score.</code></pre>
+        <p>Старата стойност <code>5</code> изчезва. В кутията вече е <code>15</code>.</p>
+      </section>
+
+      <section>
+        <h2>Първи пример</h2>
+        <p>Сега да помогнем на Byte да обясни на приятелите си какво стана с бисквитките:</p>
+        <pre><code class="language-csharp">int cookies = 7;
+int friends = 2;
+
+int each = cookies / friends;
+int left = cookies % friends;
+
+Console.WriteLine("Всеки получава: " + each);
+Console.WriteLine("Остават: " + left);</code></pre>
+        <p>Резултат:</p>
+        <pre><code>Всеки получава: 3
+Остават: 1</code></pre>
+      </section>
+
+      <section>
+        <h2>Разбивка на кода</h2>
+        <p>Първите два реда са познати от Урок 3. Те създават две променливи за цели числа: <code>cookies</code> със стойност <code>7</code> и <code>friends</code> със стойност <code>2</code>.</p>
+        <pre><code class="language-csharp">int each = cookies / friends;</code></pre>
+        <p>Това е първият израз в програмата. C# заменя имената със стойностите им: <code>cookies / friends</code> става <code>7 / 2</code>. И двете числа са цели, затова дробната част се губи и в <code>each</code> се записва <code>3</code>.</p>
+        <pre><code class="language-csharp">int left = cookies % friends;</code></pre>
+        <p>Същите числа, но с друг оператор. <code>7 % 2</code> е <code>1</code>, затова в <code>left</code> се записва <code>1</code>.</p>
+        <pre><code class="language-csharp">Console.WriteLine("Всеки получава: " + each);
+Console.WriteLine("Остават: " + left);</code></pre>
+        <p>Тук <code>+</code> слепва текст със стойност. Първият ред залепя стойността на <code>each</code> след <code>"Всеки получава: "</code> и показва <code>Всеки получава: 3</code>. Вторият ред прави същото със стойността на <code>left</code> и показва <code>Остават: 1</code>.</p>
+      </section>
+
+      <section>
+        <h2>Чести грешки</h2>
+        <h3>Грешка 1: Очакваме дробен резултат от цели числа</h3>
+        <pre><code class="language-csharp">int pizzas = 7;
+int friends = 2;
+Console.WriteLine(pizzas / friends);</code></pre>
+        <p>Резултатът ще бъде:</p>
+        <pre><code>3</code></pre>
+        <p>Защо е проблем:</p>
+        <p>Искахме да видим по колко пици се падат на човек, тоест <code>3.5</code>. Но <code>pizzas</code> и <code>friends</code> са <code>int</code>, а делението на две цели числа губи дробната част.</p>
+        <p>Поправка:</p>
+        <pre><code class="language-csharp">double pizzas = 7;
+int friends = 2;
+Console.WriteLine(pizzas / friends);</code></pre>
+        <p>Резултат:</p>
+        <pre><code>3.5</code></pre>
+        <p>Сега <code>pizzas</code> е <code>double</code>, затова и резултатът е <code>double</code>.</p>
+
+        <h3>Грешка 2: Забравени скоби</h3>
+        <p>Искаме средното аритметично на 5 и 6:</p>
+        <pre><code class="language-csharp">double average = 5 + 6 / 2.0;
+Console.WriteLine(average);</code></pre>
+        <p>Резултатът ще бъде:</p>
+        <pre><code>8</code></pre>
+        <p>Защо е проблем:</p>
+        <p>Делението е преди събирането. C# първо пресмята <code>6 / 2.0</code>, което е <code>3</code>, и чак после <code>5 + 3</code>, което е <code>8</code>. А средното на 5 и 6 е <code>5.5</code>.</p>
+        <p>Поправка:</p>
+        <pre><code class="language-csharp">double average = (5 + 6) / 2.0;
+Console.WriteLine(average);</code></pre>
+
+        <h3>Грешка 3: Текстът слепва числата</h3>
+        <pre><code class="language-csharp">Console.WriteLine("Сбор: " + 2 + 3);</code></pre>
+        <p>Резултатът ще бъде:</p>
+        <pre><code>Сбор: 23</code></pre>
+        <p>Защо е проблем:</p>
+        <p>C# чете отляво надясно. <code>"Сбор: " + 2</code> вече е текст, затова <code>3</code> не се събира с <code>2</code>, а се залепя след него.</p>
+        <p>Поправка:</p>
+        <pre><code class="language-csharp">Console.WriteLine("Сбор: " + (2 + 3));</code></pre>
+
+        <h3>Грешка 4: Изчислението не се записва</h3>
+        <pre><code class="language-csharp">int score = 5;
+score + 10;
+Console.WriteLine(score);</code></pre>
+        <p>Защо е проблем:</p>
+        <p>Изразът <code>score + 10</code> има стойност <code>15</code>, но редът не казва какво да се направи с нея. Не я записва и не я показва. C# дава грешка: такъв ред не е инструкция. Програмата няма да се стартира.</p>
+        <p>Поправка:</p>
+        <pre><code class="language-csharp">int score = 5;
+score += 10;
+Console.WriteLine(score);</code></pre>
+
+        <h3>Грешка 5: Деление на нула</h3>
+        <pre><code class="language-csharp">int cookies = 10;
+int friends = 0;
+Console.WriteLine(cookies / friends);</code></pre>
+        <p>Защо е проблем:</p>
+        <p>Не можеш да разделиш 10 бисквитки между 0 приятели. Деление на нула няма смисъл и C# не знае какъв резултат да даде. Програмата се стартира, но на третия ред спира с грешка при изпълнение:</p>
+        <pre><code>Unhandled exception. System.DivideByZeroException: Attempted to divide by zero.</code></pre>
+        <p><code>DivideByZeroException</code> означава "опит за деление на нула". Числото, на което делим, се нарича делител. В Урок 6 ще научим как да проверим делителя, преди да делим.</p>
+        <p>Поправка:</p>
+        <pre><code class="language-csharp">int cookies = 10;
+int friends = 2;
+Console.WriteLine(cookies / friends);</code></pre>
+        <p>Сега делителят е 2. Делението работи с всеки делител, различен от 0.</p>
+      </section>
+
+      <section>
+        <h2>Как мисли програмистът</h2>
+        <p>Преди да напишеш сметка, спри за момент и си задай няколко въпроса. Нека ги пробваме със задача: Byte кара колело три дни, по 12, 15 и 18 километра. Колко километра е минал средно на ден?</p>
+        <pre><code>1. Какви числа имам? Цели: 12, 15 и 18.
+2. Трябва ли ми дробна част? Средното може да излезе дробно. Ще деля на 3.0.
+3. Кой оператор ми трябва? + за сбора и / за делението.
+4. Важен ли е редът? Първо събирам, после деля. Значи ми трябват скоби.
+5. Какво очаквам? На ръка: 12 + 15 + 18 = 45, а 45 / 3 = 15.</code></pre>
+        <p>Код:</p>
+        <pre><code class="language-csharp">int day1 = 12;
+int day2 = 15;
+int day3 = 18;
+double average = (day1 + day2 + day3) / 3.0;
+Console.WriteLine("Средно на ден: " + average);</code></pre>
+        <p>Резултат:</p>
+        <pre><code>Средно на ден: 15</code></pre>
+        <p>Кодът показа същото, което сметнахме на ръка. Сега можем да му вярваме и за други числа.</p>
+        <p>Byte би казал:</p>
+        <blockquote>Byte: "Първо смятам наум с малки числа, после вярвам на кода."</blockquote>
+      </section>
+
+      <section>
+        <h2>Практика</h2>
+        <div class="practice-block">
+          <h3>Какво ще отпечата тази програма?</h3>
+          <pre><code class="language-csharp">int a = 10;
+int b = 3;
+Console.WriteLine(a + b);
+Console.WriteLine(a - b);
+Console.WriteLine(a * b);
+Console.WriteLine(a / b);
+Console.WriteLine(a % b);</code></pre>
+          <p>Твоето предположение:</p>
+          <pre><code>...</code></pre>
+        </div>
+
+        <div class="practice-block">
+          <h3>Предвиди стойността</h3>
+          <p>Каква е стойността на <code>coins</code> накрая?</p>
+          <pre><code class="language-csharp">int coins = 20;
+coins = coins - 5;
+coins += 10;
+coins = coins * 2;</code></pre>
+          <p>Проследи кода ред по ред и запиши стойността на <code>coins</code> след всеки ред.</p>
+        </div>
+
+        <div class="practice-block">
+          <h3>Намери бъга</h3>
+          <p>Програмата трябва да покаже средния резултат от две игри: 7 и 8 точки. Очакваме <code>Среден резултат: 7.5</code>.</p>
+          <pre><code class="language-csharp">int game1 = 7;
+int game2 = 8;
+double average = (game1 + game2) / 2;
+Console.WriteLine("Среден резултат: " + average);</code></pre>
+          <p>Когато я стартираш, ще видиш:</p>
+          <pre><code>Среден резултат: 7</code></pre>
+          <p>Къде отиде половинката? Какъв е проблемът?</p>
+          <p>Подсказка: <code>average</code> е <code>double</code>, но погледни кои числа се делят.</p>
+        </div>
+
+        <div class="practice-block">
+          <h3>Поправи кода</h3>
+          <p>Програмата трябва да добави 5 точки към 10 и да покаже новите точки на един ред. Кодът има две грешки:</p>
+          <pre><code class="language-csharp">int points = 10;
+points + 5;
+Console.WriteLine("Точки: " + points)</code></pre>
+          <p>Поправи го така, че да покаже:</p>
+          <pre><code>Точки: 15</code></pre>
+        </div>
+      </section>
+
+      <section>
+        <h2>Упражнения по трудност</h2>
+        <div class="difficulty">
+          <h3>⭐ Easy</h3>
+          <ol>
+            <li>Покажи резултатите от <code>12 + 8</code>, <code>12 - 8</code>, <code>12 * 8</code>, <code>12 / 8</code> и <code>12 % 8</code>. Всеки резултат да е на отделен ред с етикет, например <code>12 + 8 = 20</code>. Подсказка: сложи сметката в скоби, както в <code>"Сбор: " + (2 + 3)</code>.</li>
+            <li>Създай <code>int minutes = 135;</code> и покажи <code>2 часа и 15 минути</code>. Използвай <code>/</code> и <code>%</code>. Един час има 60 минути.</li>
+            <li>Предвиди, без да стартираш програмата и без да гледаш в обяснението, какво ще отпечата:</li>
+          </ol>
+          <pre><code class="language-csharp">Console.WriteLine(2 + 3 * 4);
+Console.WriteLine((2 + 3) * 4);</code></pre>
+          <ol start="4">
+            <li>Създай променлива с името <code>"Byte"</code> и променлива с годините <code>3</code>. Покажи на един ред <code>Казвам се Byte и съм на 3 години</code>, като използваш двете променливи.</li>
+          </ol>
+        </div>
+
+        <div class="difficulty">
+          <h3>⭐⭐ Medium</h3>
+          <ol>
+            <li>Попитай за две оценки като дробни числа (<code>double</code>) и покажи средната им стойност. Например за <code>5</code> и <code>6</code> програмата показва <code>5.5</code>.</li>
+            <li>Попитай за брой бонбони и брой деца. Покажи по колко бонбона получава всяко дете и колко остават. Например при 17 бонбона и 5 деца всяко дете получава 3, а остават 2.</li>
+            <li>Предвиди изхода:</li>
+          </ol>
+          <pre><code class="language-csharp">Console.WriteLine("1" + 1);
+Console.WriteLine(1 + 1 + "1");
+Console.WriteLine("1" + (1 + 1));</code></pre>
+        </div>
+
+        <div class="difficulty">
+          <h3>⭐⭐⭐ Hard</h3>
+          <ol>
+            <li>Попитай за брой секунди и покажи колко минути и секунди са. Например при <code>125</code> програмата показва <code>2 минути и 5 секунди</code>.</li>
+            <li>Попитай за температура по Целзий (<code>double</code>) и я покажи по Фаренхайт. Формулата е <code>C * 9 / 5 + 32</code>, където <code>C</code> е температурата по Целзий. Например при <code>20</code> програмата показва <code>68</code>.</li>
+            <li>Програмата трябва да раздели 17 играчки поравно в 5 кутии и да покаже по колко играчки има във всяка кутия. Намери и поправи грешките:</li>
+          </ol>
+          <pre><code class="language-csharp">int total = 17;
+int boxes = 5
+int perBox = total % boxes;
+Console.WriteLine("Във всяка кутия: " + perBox);</code></pre>
+        </div>
+
+        <div class="difficulty">
+          <h3>🧠 Challenge</h3>
+          <p>Направи "Касова бележка на Byte".</p>
+          <p>Попитай за цената (<code>double</code>) и броя (<code>int</code>) на 3 продукта. После покажи сумата за всеки продукт, общата сума и рестото от банкнота от 50. Приеми, че парите стигат.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>Мини проект</h2>
+        <h3>Сметка за пица</h3>
+        <p>Byte и приятелите му поръчват пици. Напиши програма, която пресмята сметката. Тя пита за:</p>
+        <ul>
+          <li>брой пици (<code>int</code>);</li>
+          <li>цена на една пица (<code>double</code>);</li>
+          <li>брой приятели (<code>int</code>).</li>
+        </ul>
+        <p>Всяка пица има 8 парчета. Това число не се въвежда.</p>
+        <p>После програмата показва обща цена, колко плаща всеки, общо парчета, по колко парчета получава всеки и колко парчета остават.</p>
+        <p>Примерно изпълнение:</p>
+        <pre><code>Колко пици поръчвате?
+3
+Колко струва една пица?
+12.5
+Колко приятели сте?
+5
+Обща цена: 37.5
+Всеки плаща: 7.5
+Общо парчета: 24
+Парчета на човек: 4
+Остават парчета: 4</code></pre>
+        <p>Преди да пишеш код, планирай:</p>
+        <pre><code>1. Кои стойности са int и кои double?
+2. Къде ми трябва /, а къде %?
+3. В какъв ред ще покажа резултатите?
+4. Какво очаквам при 3 пици по 12.5 за 5 приятели? Сметни го на ръка.</code></pre>
+      </section>
+
+      <section>
+        <h2>Тест за самопроверка</h2>
+        <ol>
+          <li>Какво е израз?</li>
+          <li>Каква е стойността на <code>7 / 2</code> и защо?</li>
+          <li>Как да получиш <code>3.5</code> от числата 7 и 2?</li>
+          <li>Какво прави операторът <code>%</code>? Каква е стойността на <code>17 % 5</code>?</li>
+          <li>Каква е стойността на <code>2 + 3 * 4</code>? А на <code>(2 + 3) * 4</code>?</li>
+          <li>Какво означава <code>score += 10;</code>?</li>
+          <li>Какво ще отпечата <code>Console.WriteLine("Сбор: " + 2 + 3);</code>?</li>
+          <li>За какво служат коментарите? Изпълнява ли ги компютърът?</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Обобщение</h2>
+        <p>В този урок научи:</p>
+        <ul>
+          <li>изразът е сметка, която C# изчислява до една стойност;</li>
+          <li><code>+</code>, <code>-</code>, <code>*</code> и <code>/</code> събират, изваждат, умножават и делят, а <code>%</code> дава остатъка;</li>
+          <li>делението на две цели числа губи дробната част: <code>7 / 2</code> е <code>3</code>;</li>
+          <li>ако поне едното число е <code>double</code>, резултатът е <code>double</code>: <code>7 / 2.0</code> е <code>3.5</code>;</li>
+          <li><code>*</code>, <code>/</code> и <code>%</code> се изчисляват преди <code>+</code> и <code>-</code>, а със скоби можеш да смениш реда на действията;</li>
+          <li><code>score = score + 10;</code> първо изчислява дясната страна, после записва резултата в <code>score</code>;</li>
+          <li><code>score += 10;</code> е кратък запис на същото, а <code>score -= 3;</code> намалява с 3;</li>
+          <li><code>+</code> с текст слепва: <code>"Точки: " + score</code> показва етикет и стойност на един ред;</li>
+          <li>коментарите започват с <code>//</code> и са бележки за хората, които компютърът пропуска.</li>
+        </ul>
+        <p>Най-важната идея:</p>
+        <pre><code>Изразът първо се изчислява до една стойност.
+После тази стойност се показва, записва или използва.</code></pre>
+      </section>
+
+      <section>
+        <h2>Какво следва</h2>
+        <p>В следващия урок програмите ще започнат да взимат решения.</p>
+        <p>Ще сравняваме стойности с оператори като <code>&gt;</code> и <code>==</code> и ще казваме на програмата: ако това е вярно, направи едно, иначе направи друго.</p>
+      </section>
+
+      <footer class="footer-nav">
+        Важни страници: <a href="../index.html">Начало</a>, <a href="../docs/curriculum.html">Програма</a>, <a href="../docs/glossary.html">Речник</a>.
+      </footer>
+    </article>
+  </main>
+</body>
+</html>
