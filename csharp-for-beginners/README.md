@@ -23,14 +23,21 @@ csharp-for-beginners/
 ├── exercises/
 ├── solutions/
 ├── examples/
+├── tools/
+│   ├── build_html.py
+│   ├── test_build_html.py
+│   └── test_site.py
 └── README.md
 ```
 
 ## Работен процес
 
 1. Всеки урок се пише първо като Markdown файл в `lessons/lesson-XX.md`.
-2. След това се създава HTML версия в `html/lessons/lesson-XX.html`.
-3. HTML версията трябва да съдържа същото учебно съдържание като Markdown урока.
+2. HTML версията `html/lessons/lesson-XX.html` се генерира от Markdown с командата
+   `python tools/build_html.py` (пуска се от папка `csharp-for-beginners`). HTML уроците не се
+   редактират на ръка.
+3. След това `python -m unittest discover -s tools` проверява, че HTML е актуален, съдържа
+   целия текст на урока и че линковете работят.
 4. Всички HTML уроци използват общия стил `html/assets/course.css`.
 5. Уроците следват правилата в `docs/author-bible.md` и шаблона в `docs/lesson-template.md`.
 
