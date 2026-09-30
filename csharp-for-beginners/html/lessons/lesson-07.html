@@ -1,0 +1,636 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Урок 7: switch и избор от меню</title>
+  <link rel="stylesheet" href="../assets/course.css">
+  <script>
+    (function () {
+      var version = Date.now().toString();
+
+      function versionedUrl(href) {
+        try {
+          var url = new URL(href, window.location.href);
+          if (url.origin !== window.location.origin) {
+            return href;
+          }
+          url.searchParams.set("v", version);
+          return url.href;
+        } catch (error) {
+          return href;
+        }
+      }
+
+      function applyCacheBusting() {
+        document.querySelectorAll("link[rel=\"stylesheet\"][href]").forEach(function (link) {
+          link.setAttribute("href", versionedUrl(link.getAttribute("href")));
+        });
+
+        document.querySelectorAll("a[href]").forEach(function (link) {
+          var href = link.getAttribute("href");
+          if (/\.html(?:$|[?#])/.test(href)) {
+            link.setAttribute("href", versionedUrl(href));
+          }
+        });
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", applyCacheBusting);
+      } else {
+        applyCacheBusting();
+      }
+    }());
+  </script>
+</head>
+<body>
+  <main class="page">
+    <nav class="top-nav" aria-label="Основна навигация">
+      <div class="top-nav-title">C# за начинаещи</div>
+      <div class="top-nav-links">
+        <a href="../index.html">Начало</a>
+        <a href="../docs/curriculum.html">Програма</a>
+        <a href="../docs/glossary.html">Речник</a>
+      </div>
+    </nav>
+
+    <article class="lesson">
+      <header class="lesson-header">
+        <div class="lesson-label">Урок 7</div>
+        <h1><code>switch</code> и избор от меню</h1>
+      </header>
+
+      <section>
+        <h2>Какво ще научиш</h2>
+        <p>До края на този урок ще можеш да:</p>
+        <ul>
+          <li>избираш код според точната стойност на променлива със <code>switch</code>;</li>
+          <li>използваш <code>case</code>, <code>break</code> и <code>default</code>;</li>
+          <li>групираш няколко <code>case</code> с общ код;</li>
+          <li>правиш <code>switch</code> с текст;</li>
+          <li>пишеш конзолни менюта;</li>
+          <li>преценяваш кога да използваш <code>switch</code> и кога <code>if</code>.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Защо това е важно</h2>
+        <p>Менюта има навсякъде. В игра избираш "Нова игра", "Продължи" или "Изход". На автомат за напитки натискаш бутон с номер. Когато се обадиш в някоя фирма, записан глас казва: "За информация натиснете 1. За връзка с оператор натиснете 2."</p>
+        <p>Меню е списък с опции, от които човекът избира. Всяка опция е точна: бутон 1, бутон 2, бутон 3. В този урок ще научиш <code>switch</code>: подреден начин програмата да избира между точни възможности.</p>
+      </section>
+
+      <section>
+        <h2>История с Byte</h2>
+        <p>Днес Byte работи като автомат за напитки в училищния коридор. Отпред на него светят три бутона: 1 за вода, 2 за сок и 3 за какао. Ученикът натиска бутон, а Byte трябва да даде точната напитка.</p>
+        <p>Byte вече знае <code>else if</code> от Урок 6 и си построява стълба от въпроси: "Бутонът 1 ли е? Ако не, 2 ли е? Ако не, 3 ли е? Ако не, няма такъв бутон." Работи, но при всяко натискане Byte слиза по стълбата стъпало по стъпало. А директорът иска още бутони: чай, мляко, лимонада. Byte си представя колко дълга ще стане стълбата и казва:</p>
+        <blockquote>Byte: "Всеки бутон води точно до едно място. Искам табло, не стълба."</blockquote>
+        <p>Byte е прав. Когато стойността е една от няколко точни възможности, в C# има по-подреден начин за избор. Нарича се <code>switch</code>.</p>
+      </section>
+
+      <section>
+        <h2>Основно обяснение</h2>
+        <h3>Как изглежда <code>switch</code></h3>
+        <p><code>switch</code> на английски значи "превключвател". Той взима една стойност и я сравнява с няколко точни възможности. Всяка възможност се пише с <code>case</code>, което значи "случай". Ето автомата на Byte, когато някой натисне бутон 2:</p>
+        <pre><code class="language-csharp">int button = 2;
+switch (button)
+{
+    case 1:
+        Console.WriteLine("Ето ти вода.");
+        break;
+    case 2:
+        Console.WriteLine("Ето ти сок.");
+        break;
+    case 3:
+        Console.WriteLine("Ето ти какао.");
+        break;
+}
+Console.WriteLine("Byte чака следващия ученик.");</code></pre>
+        <p>Резултат:</p>
+        <pre><code>Ето ти сок.
+Byte чака следващия ученик.</code></pre>
+        <p>След думата <code>switch</code> в кръгли скоби стои стойността, която проверяваме: <code>button</code>. След <code>)</code> няма <code>;</code>, както при <code>if</code>. В къдравите скоби са случаите. <code>case 2:</code> значи "ако стойността е 2". След числото има двоеточие <code>:</code>, а не точка и запетая.</p>
+        <p>Под всеки <code>case</code>, с отстъп, е неговият код. C# поглежда стойността на <code>button</code>, намира <code>case 2:</code> и изпълнява редовете под него до <code>break;</code>. Кодът на другите случаи не се изпълнява. После програмата продължава с реда след затварящата <code>}</code> на <code>switch</code>.</p>
+
+        <h3><code>break</code></h3>
+        <p><code>break</code> на английски значи "прекъсни". Редът <code>break;</code> казва на C#: "Този случай свърши. Излез от <code>switch</code>." В C# кодът на всеки <code>case</code> завършва с <code>break;</code>, дори кодът на последния. Без <code>break</code> програмата би продължила надолу към кода на следващия <code>case</code>, а това се нарича "пропадане". В някои други езици пропадането е позволено и често води до бъгове, затова C# не го позволява: ако липсва <code>break</code>, C# дава грешка, преди програмата да тръгне.</p>
+
+        <h3><code>default</code></h3>
+        <p>Какво става, ако някой натисне бутон 7? В горния пример няма <code>case 7:</code>, затова C# прескача целия <code>switch</code> и показва само <code>Byte чака следващия ученик.</code> За такива случаи има <code>default</code>, което значи "по подразбиране", тоест "във всички останали случаи". <code>default:</code> обикновено се пише след последния <code>case</code>, хваща всяка стойност без свой <code>case</code> и също завършва с <code>break;</code>. Прилича на <code>else</code> в края на стълбата от Урок 6.</p>
+
+        <h3>Няколко <code>case</code> с общ код</h3>
+        <p>Понякога няколко стойности трябва да дадат един и същ резултат. Дните от 1 до 5 са делнични, а 6 и 7 са уикенд. Не е нужно да пишеш един и същ ред пет пъти. Нареди няколко <code>case</code> един под друг и напиши общия код само веднъж:</p>
+        <pre><code class="language-csharp">int day = 6;
+switch (day)
+{
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+        Console.WriteLine("Делничен ден.");
+        break;
+    case 6:
+    case 7:
+        Console.WriteLine("Уикенд!");
+        break;
+    default:
+        Console.WriteLine("Няма такъв ден.");
+        break;
+}</code></pre>
+        <p>Резултат:</p>
+        <pre><code>Уикенд!</code></pre>
+        <p><code>day</code> е 6. <code>case 6:</code> няма собствен код, затова C# изпълнява общия код на групата след <code>case 7:</code> и показва <code>Уикенд!</code>. Ако <code>day</code> е 3, ще видиш <code>Делничен ден.</code>, а ако е 9, <code>default</code> ще покаже <code>Няма такъв ден.</code> Това не е пропадане: празните <code>case</code> един под друг са като няколко врати към една и съща стая. Пропадане би било, ако <code>case 6:</code> имаше свой код, но без <code>break</code>.</p>
+
+        <h3><code>switch</code> с текст</h3>
+        <p><code>switch</code> работи и с текст. Тогава стойностите след <code>case</code> са в кавички. Ето как Byte обяснява хода си в играта "Камък, ножица, хартия":</p>
+        <pre><code class="language-csharp">string move = "ножица";
+switch (move)
+{
+    case "камък":
+        Console.WriteLine("Камъкът чупи ножицата.");
+        break;
+    case "ножица":
+        Console.WriteLine("Ножицата реже хартията.");
+        break;
+    case "хартия":
+        Console.WriteLine("Хартията покрива камъка.");
+        break;
+    default:
+        Console.WriteLine("Непознат ход.");
+        break;
+}</code></pre>
+        <p>Резултат:</p>
+        <pre><code>Ножицата реже хартията.</code></pre>
+        <p><code>switch</code> сравнява текста точно като <code>==</code> в Урок 6: буква по буква. Главните букви имат значение. Ако в <code>move</code> е <code>"Ножица"</code> с главна буква, стойността не съвпада с <code>case "ножица":</code> и ще видиш <code>Непознат ход.</code> Същото става и с един интервал в повече: <code>"ножица "</code> не е <code>"ножица"</code>.</p>
+
+        <h3><code>if</code> вътре в <code>case</code></h3>
+        <p>Под <code>case</code> може да стои всякакъв код, дори <code>if</code>. Например автоматът на Byte дава какао само ако е останало. За по-кратко тук е само бутонът за какао:</p>
+        <pre><code class="language-csharp">int button = 3;
+int cocoaCups = 0;
+switch (button)
+{
+    case 3:
+        if (cocoaCups &gt; 0)
+        {
+            Console.WriteLine("Ето ти какао.");
+        }
+        else
+        {
+            Console.WriteLine("Какаото свърши.");
+        }
+        break;
+}</code></pre>
+        <p>Резултат:</p>
+        <pre><code>Какаото свърши.</code></pre>
+        <p><code>switch</code> избира бутона, а <code>if</code> проверява още едно условие вътре в <code>case 3:</code>. <code>cocoaCups</code> е 0, затова се изпълнява блокът на <code>else</code>. <code>break;</code> стои след целия <code>if</code>/<code>else</code>, в края на <code>case</code>. Така двата клона на <code>if</code> завършват с един общ <code>break</code>. В мини проекта ще използваш същата идея, за да не делиш на нула.</p>
+
+        <h3><code>switch</code> или <code>if</code>?</h3>
+        <p>И <code>switch</code>, и <code>if</code> избират кой код да се изпълни. Кога кое да използваш?</p>
+        <table>
+          <thead>
+            <tr><th>Какво проверяваш</th><th>Пример</th><th>Избери</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>точни числа</td><td>бутон 1, 2 или 3</td><td><code>switch</code></td></tr>
+            <tr><td>точни думи</td><td><code>"камък"</code>, <code>"ножица"</code> или <code>"хартия"</code></td><td><code>switch</code></td></tr>
+            <tr><td>интервал</td><td>точки 90 и повече</td><td><code>if</code></td></tr>
+            <tr><td>няколко условия заедно</td><td>ръст поне 140 и възраст поне 10</td><td><code>if</code></td></tr>
+          </tbody>
+        </table>
+        <p>Така, както го учим, <code>switch</code> пита само едно: "Равна ли е стойността на тази?" Представи си, че точките са от 0 до 100 и със <code>switch</code> проверяваш дали са 90 или повече. Ще ти трябват 11 <code>case</code>: от <code>case 90:</code> до <code>case 100:</code>! А с <code>if</code> стига едно сравнение: <code>points &gt;= 90</code>. Затова за точни стойности избирай <code>switch</code>, а за интервали и сложни условия избирай <code>if</code>.</p>
+        <p>Ако разглеждаш C# код в интернет, може да срещнеш и <code>case &gt; 5:</code>. В по-новите версии на C# това е позволено, но в този курс няма да го използваме. За интервали ще пишем <code>if</code>.</p>
+      </section>
+
+      <section>
+        <h2>Визуално обяснение</h2>
+        <p><code>switch</code> е като табло с бутони. От стойността на <code>choice</code> тръгват пътища към всеки <code>case</code> и към <code>default</code>:</p>
+        <pre><code>                 choice
+                   |
+     +---------+---+-----+----------+
+     |         |         |          |
+  case 1    case 2    case 3     default
+  "вода"    "сок"     "какао"    "Няма такъв бутон."</code></pre>
+        <p>C# тръгва само по един път: към <code>case</code>, който съвпада със стойността. Ако такъв няма, тръгва към <code>default</code>. Сравни със стълбата от Урок 6: там C# слиза стъпало по стъпало и задава въпрос след въпрос. Тук въпросът е един: "Каква е стойността?"</p>
+      </section>
+
+      <section>
+        <h2>Първи пример</h2>
+        <p>Сега да направим истинско меню за автомата. Програмата първо показва опциите. После чете избора на човека и със <code>switch</code> решава какво да направи:</p>
+        <pre><code class="language-csharp">Console.WriteLine("Избери напитка:");
+Console.WriteLine("1 - вода");
+Console.WriteLine("2 - сок");
+Console.WriteLine("3 - какао");
+
+string choiceText = Console.ReadLine();
+int choice = int.Parse(choiceText);
+
+switch (choice)
+{
+    case 1:
+        Console.WriteLine("Ето ти вода.");
+        break;
+    case 2:
+        Console.WriteLine("Ето ти сок.");
+        break;
+    case 3:
+        Console.WriteLine("Ето ти какао.");
+        break;
+    default:
+        Console.WriteLine("Няма такъв бутон.");
+        break;
+}</code></pre>
+        <p>Ако човекът въведе:</p>
+        <pre><code>2</code></pre>
+        <p>резултатът ще бъде:</p>
+        <pre><code>Избери напитка:
+1 - вода
+2 - сок
+3 - какао
+Ето ти сок.</code></pre>
+        <p>Ако човекът въведе:</p>
+        <pre><code>7</code></pre>
+        <p>резултатът ще бъде:</p>
+        <pre><code>Избери напитка:
+1 - вода
+2 - сок
+3 - какао
+Няма такъв бутон.</code></pre>
+      </section>
+
+      <section>
+        <h2>Разбивка на кода</h2>
+        <p>Първите четири реда показват менюто: въпрос и три опции, всяка на свой ред. Опциите се показват преди <code>Console.ReadLine()</code>, за да знае човекът какво може да избере. После идват двата познати реда от Урок 4: <code>choiceText</code> пази въведения текст, а <code>int.Parse</code> го превръща в цялото число <code>choice</code>.</p>
+        <p><code>switch (choice)</code> казва: "Погледни стойността на <code>choice</code>." Всеки <code>case</code> е една опция от менюто и числото след него съвпада с числото в менюто: в менюто пише <code>2 - сок</code>, затова сокът е под <code>case 2:</code>. Всеки <code>case</code> завършва с <code>break;</code>, който изпраща програмата след <code>switch</code>. При <code>7</code> никой <code>case</code> не съвпада, затова се изпълнява <code>default</code> и човекът вижда <code>Няма такъв бутон.</code> Така програмата отговаря на всеки избор, дори на грешния.</p>
+      </section>
+
+      <section>
+        <h2>Чести грешки</h2>
+        <h3>Грешка 1: Забравен <code>break</code></h3>
+        <pre><code class="language-csharp">int button = 1;
+switch (button)
+{
+    case 1:
+        Console.WriteLine("Вода");
+    case 2:
+        Console.WriteLine("Сок");
+        break;
+}</code></pre>
+        <p>Защо е проблем:</p>
+        <p>В <code>case 1:</code> липсва <code>break;</code>. След реда с <code>Вода</code> нищо не казва на C# да излезе от <code>switch</code>, затова програмата би пропаднала към <code>case 2:</code>. C# не позволява пропадане и дава грешка, преди програмата да тръгне. С <code>break;</code> след <code>Вода</code> програмата ще покаже само <code>Вода</code>.</p>
+        <p>Поправка:</p>
+        <pre><code class="language-csharp">int button = 1;
+switch (button)
+{
+    case 1:
+        Console.WriteLine("Вода");
+        break;
+    case 2:
+        Console.WriteLine("Сок");
+        break;
+}</code></pre>
+
+        <h3>Грешка 2: Два еднакви <code>case</code></h3>
+        <pre><code class="language-csharp">int button = 2;
+switch (button)
+{
+    case 1:
+        Console.WriteLine("Вода");
+        break;
+    case 1:
+        Console.WriteLine("Сок");
+        break;
+}</code></pre>
+        <p>Защо е проблем:</p>
+        <p><code>case 1:</code> е написан два пъти. Ако стойността е 1, C# не знае кой от двата случая да избере, затова дава грешка, преди програмата да тръгне. Всяка стойност може да има само един <code>case</code>. Тук вторият трябва да е <code>case 2:</code>. Тогава програмата ще покаже <code>Сок</code>.</p>
+        <p>Поправка:</p>
+        <pre><code class="language-csharp">int button = 2;
+switch (button)
+{
+    case 1:
+        Console.WriteLine("Вода");
+        break;
+    case 2:
+        Console.WriteLine("Сок");
+        break;
+}</code></pre>
+
+        <h3>Грешка 3: Текст в <code>case</code>, а стойността е число</h3>
+        <pre><code class="language-csharp">int button = 1;
+switch (button)
+{
+    case "1":
+        Console.WriteLine("Вода");
+        break;
+}</code></pre>
+        <p>Защо е проблем:</p>
+        <p><code>button</code> е <code>int</code>, а <code>"1"</code> в кавички е текст. В Урок 5 видя, че <code>"5"</code> и <code>5</code> не са едно и също: <code>"5" + 3</code> дава <code>53</code>. C# не може да сравни число с текст и дава грешка, преди програмата да тръгне. Стойностите след <code>case</code> трябва да са от същия тип като стойността в <code>switch</code>. С <code>case 1:</code> без кавички програмата ще покаже <code>Вода</code>.</p>
+        <p>Поправка:</p>
+        <pre><code class="language-csharp">int button = 1;
+switch (button)
+{
+    case 1:
+        Console.WriteLine("Вода");
+        break;
+}</code></pre>
+
+        <h3>Грешка 4: Главни и малки букви</h3>
+        <pre><code class="language-csharp">string move = "Камък";
+switch (move)
+{
+    case "камък":
+        Console.WriteLine("Избра камък.");
+        break;
+    default:
+        Console.WriteLine("Непознат ход.");
+        break;
+}</code></pre>
+        <p>Резултатът ще бъде:</p>
+        <pre><code>Непознат ход.</code></pre>
+        <p>Защо е проблем:</p>
+        <p>Човекът е написал <code>Камък</code> с главна буква. <code>switch</code> сравнява текста буква по буква и <code>"Камък"</code> не е <code>"камък"</code>. Никой <code>case</code> не съвпада, затова се изпълнява <code>default</code>. C# не дава грешка: програмата работи, но не прави това, което искаме. За да приемеш и двата начина на писане, сложи два <code>case</code> един под друг.</p>
+        <p>Поправка:</p>
+        <pre><code class="language-csharp">string move = "Камък";
+switch (move)
+{
+    case "камък":
+    case "Камък":
+        Console.WriteLine("Избра камък.");
+        break;
+    default:
+        Console.WriteLine("Непознат ход.");
+        break;
+}</code></pre>
+        <p>Резултат:</p>
+        <pre><code>Избра камък.</code></pre>
+
+        <h3>Грешка 5: Без <code>default</code> програмата мълчи</h3>
+        <pre><code class="language-csharp">int button = 9;
+switch (button)
+{
+    case 1:
+        Console.WriteLine("Вода");
+        break;
+    case 2:
+        Console.WriteLine("Сок");
+        break;
+}</code></pre>
+        <p>Резултатът ще бъде:</p>
+        <pre><code></code></pre>
+        <p>Защо е проблем:</p>
+        <p>Кутията за резултата е празна, защото програмата наистина не показва нищо. Натиснат е бутон 9, а за 9 няма <code>case</code>. C# прескача целия <code>switch</code> и мълчи. Човекът стои пред автомата и не знае дали е сбъркал бутона, или автоматът е развален. Добрата програма отговаря на всеки избор, дори на грешния.</p>
+        <p>Поправка:</p>
+        <pre><code class="language-csharp">int button = 9;
+switch (button)
+{
+    case 1:
+        Console.WriteLine("Вода");
+        break;
+    case 2:
+        Console.WriteLine("Сок");
+        break;
+    default:
+        Console.WriteLine("Няма такъв бутон.");
+        break;
+}</code></pre>
+        <p>Резултат:</p>
+        <pre><code>Няма такъв бутон.</code></pre>
+      </section>
+
+      <section>
+        <h2>Как мисли програмистът</h2>
+        <p>Преди да напишеш <code>switch</code>, спри за момент и си задай няколко въпроса. Да ги пробваме със задача: Byte се движи по команди, които човекът пише: <code>напред</code>, <code>назад</code>, <code>наляво</code> и <code>надясно</code>.</p>
+        <ol>
+          <li>Какви са всички възможни стойности? Четирите команди.</li>
+          <li>Как ще изглежда всяка стойност в кода? Като <code>case</code> със свой код и свой <code>break</code>, например <code>case "напред":</code>.</li>
+          <li>Какво става при неочаквана стойност? Човекът може да напише <code>скачай</code> или <code>Напред</code> с главна буква. За тях <code>default</code> ще покаже <code>Непозната команда.</code></li>
+          <li>Точни стойности ли са, или интервали? Точни думи, затова избирам <code>switch</code>. Ако трябваше да проверя "скорост над 50", щях да избера <code>if</code>.</li>
+        </ol>
+        <blockquote>Byte: "Първо изброявам всички бутони. После мисля какво да правя, ако някой натисне бутон, който го няма."</blockquote>
+      </section>
+
+      <section>
+        <h2>Практика</h2>
+        <div class="practice-block">
+          <h3>Какво ще отпечата тази програма?</h3>
+          <pre><code class="language-csharp">int level = 2;
+switch (level)
+{
+    case 1:
+        Console.WriteLine("Лесно");
+        break;
+    case 2:
+        Console.WriteLine("Средно");
+        break;
+    case 3:
+        Console.WriteLine("Трудно");
+        break;
+    default:
+        Console.WriteLine("Непознато ниво");
+        break;
+}
+Console.WriteLine("Играта започва!");</code></pre>
+          <p>Запиши предположението си, преди да стартираш програмата.</p>
+        </div>
+
+        <div class="practice-block">
+          <h3>Предвиди стойността</h3>
+          <p>Каква е стойността на <code>type</code> след <code>switch</code>? Проследи кода ред по ред и внимавай кой код принадлежи на <code>case 6:</code>.</p>
+          <pre><code class="language-csharp">int day = 6;
+string type = "";
+switch (day)
+{
+    case 6:
+    case 7:
+        type = "уикенд";
+        break;
+    default:
+        type = "делничен ден";
+        break;
+}</code></pre>
+        </div>
+
+        <div class="practice-block">
+          <h3>Намери бъга</h3>
+          <p>Светофарът на Byte трябва да покаже <code>Зелено - тръгвай!</code>, когато светлината е <code>"зелено"</code>. Но програмата показва друго:</p>
+          <pre><code class="language-csharp">string light = "зелено";
+switch (light)
+{
+    case "червено":
+        Console.WriteLine("Спри!");
+        break;
+    case "жълто":
+        Console.WriteLine("Внимание!");
+        break;
+    case "зелен":
+        Console.WriteLine("Зелено - тръгвай!");
+        break;
+    default:
+        Console.WriteLine("Непознат цвят.");
+        break;
+}</code></pre>
+          <p>Когато я стартираш, ще видиш:</p>
+          <pre><code>Непознат цвят.</code></pre>
+          <p>Какъв е проблемът? Подсказка: сравни стойността на <code>light</code> с текста във всеки <code>case</code>, буква по буква.</p>
+        </div>
+
+        <div class="practice-block">
+          <h3>Поправи кода</h3>
+          <p>Менюто на играта трябва да има три опции: 1 за нова игра, 2 за продължаване и 3 за изход. При 1 програмата трябва да показва <code>Нова игра</code>, при 2 <code>Продължи</code>, а при 3 <code>Изход</code>. Кодът има две грешки и C# ще ти покаже и двете, преди програмата да тръгне:</p>
+          <pre><code class="language-csharp">int choice = 2;
+switch (choice)
+{
+    case 1:
+        Console.WriteLine("Нова игра");
+    case 2:
+        Console.WriteLine("Продължи");
+        break;
+    case 2:
+        Console.WriteLine("Изход");
+        break;
+}</code></pre>
+        </div>
+      </section>
+
+      <section>
+        <h2>Упражнения по трудност</h2>
+        <div class="difficulty">
+          <h3>⭐ Easy</h3>
+          <ol>
+            <li>Попитай за число от 1 до 7 и покажи деня от седмицата: 1 е <code>Понеделник</code>, 2 е <code>Вторник</code> и така нататък до 7, което е <code>Неделя</code>. За всяко друго число покажи <code>Няма такъв ден.</code> Например при <code>3</code> програмата показва <code>Сряда</code>, а при <code>9</code> показва <code>Няма такъв ден.</code></li>
+            <li>Попитай за оценка от 2 до 6 и я покажи с думи: 2 е <code>Слаб</code>, 3 е <code>Среден</code>, 4 е <code>Добър</code>, 5 е <code>Много добър</code>, а 6 е <code>Отличен</code>. За всяко друго число покажи <code>Невалидна оценка.</code></li>
+            <li>Без да стартираш програмата от задача 2, кажи какво ще покаже тя, ако човекът въведе <code>8</code>. После я стартирай и провери.</li>
+          </ol>
+        </div>
+
+        <div class="difficulty">
+          <h3>⭐⭐ Medium</h3>
+          <ol>
+            <li>Попитай за номер на месец от 1 до 12 и покажи сезона. Групирай <code>case</code>: 12, 1 и 2 са <code>Зима</code>, 3, 4 и 5 са <code>Пролет</code>, 6, 7 и 8 са <code>Лято</code>, а 9, 10 и 11 са <code>Есен</code>. За всяко друго число покажи <code>Няма такъв месец.</code> Например при <code>1</code> програмата показва <code>Зима</code>, а при <code>7</code> показва <code>Лято</code>.</li>
+            <li>Попитай за животно и покажи звука му: за <code>куче</code> покажи <code>Бау!</code>, за <code>котка</code> покажи <code>Мяу!</code>, а за <code>крава</code> покажи <code>Муу!</code>. За всяка друга дума покажи <code>Не познавам това животно.</code></li>
+            <li>Направи меню "Профил на Byte" с опции 1 (име), 2 (версия) и 3 (батерия). Първо покажи опциите, както в първия пример. Създай променливи <code>name</code> със стойност <code>"Byte"</code>, <code>version</code> със стойност <code>7</code> и <code>battery</code> със стойност <code>80</code>. При 1 програмата показва <code>Име: Byte</code>, при 2 показва <code>Версия: 7</code>, при 3 показва <code>Батерия: 80%</code>, а при всеки друг избор показва <code>Няма такава опция.</code></li>
+          </ol>
+        </div>
+
+        <div class="difficulty">
+          <h3>⭐⭐⭐ Hard</h3>
+          <ol>
+            <li>Попитай за знак на операция (<code>+</code>, <code>-</code>, <code>*</code> или <code>/</code>) и после за две дробни числа (<code>double</code>). Пресметни резултата със <code>switch</code> по знака: <code>case "+":</code>, <code>case "-":</code> и така нататък. При <code>/</code> първо провери с <code>if</code> дали второто число е 0 и ако е, покажи <code>На нула не се дели!</code>. За друг знак покажи <code>Непозната операция.</code> Сметката в текста слагай в скоби, както в Урок 5. Например при <code>*</code>, <code>6</code> и <code>7</code> програмата показва <code>Резултат: 42</code>. Когато резултатът е цяло число, C# го показва без <code>.0</code>.</li>
+            <li>Директорът добави четвърти бутон на автомата: чай. Ето как изглежда програмата с <code>if</code> и <code>else if</code>:</li>
+          </ol>
+          <pre><code class="language-csharp">int button = 3;
+if (button == 1)
+{
+    Console.WriteLine("Вода");
+}
+else if (button == 2)
+{
+    Console.WriteLine("Сок");
+}
+else if (button == 3)
+{
+    Console.WriteLine("Какао");
+}
+else if (button == 4)
+{
+    Console.WriteLine("Чай");
+}
+else
+{
+    Console.WriteLine("Няма такъв бутон.");
+}</code></pre>
+          <p>Пренапиши я със <code>switch</code>. За <code>button</code> от 1 до 4, а и за 9, новата програма трябва да показва същото като старата. После сравни двете. Коя е по-ясна и защо?</p>
+        </div>
+
+        <div class="difficulty">
+          <h3>🧠 Challenge</h3>
+          <p>Направи "Камък, ножица, хартия срещу Byte". Byte винаги избира ножица, затова в програмата напиши <code>string byteMove = "ножица";</code>. Играчът въвежда своя ход: <code>камък</code>, <code>ножица</code> или <code>хартия</code>. Покажи <code>Byte избра ножица.</code>, като използваш <code>byteMove</code>. После направи <code>switch</code> по хода на играча и във всеки <code>case</code> покажи кой печели: <code>Ти печелиш!</code>, <code>Byte печели!</code> или <code>Равно!</code>. За всяка друга дума покажи <code>Непознат ход.</code></p>
+        </div>
+      </section>
+
+      <section>
+        <h2>Мини проект</h2>
+        <h3>Калкулатор с меню</h3>
+        <p>Byte иска да стане и калкулатор. Напиши програма, която показва заглавието <code>Калкулатор на Byte</code> и пита за две дробни числа (<code>double</code>). После тя показва меню с четири операции, пита <code>Избери операция:</code> и пресмята избраната операция със <code>switch</code>. Точните въпроси и редът им виж в примерното изпълнение по-долу.</p>
+        <p>При деление програмата първо проверява с <code>if</code> дали второто число е 0. Ако е, показва <code>На нула не се дели!</code> вместо резултата. При всеки друг избор, например 5, показва <code>Няма такава операция.</code></p>
+        <p>Внимавай как показваш резултата. Помниш ли капана от Урок 5? <code>"Сбор: " + 2 + 3</code> дава <code>Сбор: 23</code>. Тук е същото: <code>"Резултат: " + first + second</code> залепя двете числа едно след друго и при 10 и 4 показва <code>Резултат: 104</code>. Затова сметката трябва да е в скоби: <code>"Резултат: " + (first + second)</code>.</p>
+        <p>При изваждането без скоби е още по-зле. <code>+</code> и <code>-</code> имат еднакъв приоритет, затова C# смята отляво надясно и първо прави текст от <code>"Резултат: " + first</code>. От текст не може да се извади число, затова C# дава грешка, преди програмата да тръгне. При <code>*</code> и <code>/</code> скобите не са задължителни, защото C# ги смята преди <code>+</code>. Но не пречат, затова е най-сигурно винаги да ги слагаш.</p>
+        <p>Примерно изпълнение:</p>
+        <pre><code>Калкулатор на Byte
+Първо число:
+10
+Второ число:
+4
+1 - събиране
+2 - изваждане
+3 - умножение
+4 - деление
+Избери операция:
+4
+Резултат: 2.5</code></pre>
+        <p>Второ примерно изпълнение:</p>
+        <pre><code>Калкулатор на Byte
+Първо число:
+7
+Второ число:
+0
+1 - събиране
+2 - изваждане
+3 - умножение
+4 - деление
+Избери операция:
+4
+На нула не се дели!</code></pre>
+        <p>Менюто се показва само веднъж. В следващия урок ще го повторим.</p>
+        <p>Преди да пишеш код, планирай:</p>
+        <pre><code>1. Кои стойности въвежда човекът и какъв тип е всяка?
+2. Кои са опциите на менюто? Кой case отговаря на всяка?
+3. Какво става, ако човекът избере деление, а второто число е 0?
+4. Какво става, ако човекът избере опция, която я няма, например 5?</code></pre>
+      </section>
+
+      <section>
+        <h2>Тест за самопроверка</h2>
+        <ol>
+          <li>Кога <code>switch</code> е по-удобен от <code>if</code>/<code>else if</code>?</li>
+          <li>Какво прави <code>break</code>?</li>
+          <li>Какво ще се случи, ако забравиш <code>break</code>?</li>
+          <li>Кога се изпълнява <code>default</code>?</li>
+          <li>Как да изпълниш един и същ код за <code>case 6</code> и <code>case 7</code>?</li>
+          <li>Защо <code>case "Камък":</code> не хваща <code>"камък"</code>?</li>
+          <li>Може ли да сложиш <code>if</code> вътре в <code>case</code>? Дай пример.</li>
+          <li>Защо за "точки над 90" е по-добре <code>if</code>, а не <code>switch</code>?</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Обобщение</h2>
+        <p>В този урок научи:</p>
+        <ul>
+          <li><code>switch</code> сравнява една стойност с точни възможности, а всяка възможност е <code>case</code>;</li>
+          <li>C# изпълнява кода на съвпадащия <code>case</code> до <code>break</code>, а ако няма съвпадащ <code>case</code>, изпълнява <code>default</code>;</li>
+          <li>без <code>break</code> C# дава грешка, защото не позволява "пропадане" към следващия <code>case</code>;</li>
+          <li>няколко <code>case</code> един под друг споделят общ код, а в <code>case</code> може да има и <code>if</code>;</li>
+          <li><code>switch</code> работи и с текст, а главните и малките букви имат значение;</li>
+          <li>менюто показва опциите, чете избора и го подава на <code>switch</code>;</li>
+          <li>за точни стойности избирай <code>switch</code>, а за интервали и сложни условия избирай <code>if</code>.</li>
+        </ul>
+        <p>Най-важната идея:</p>
+        <pre><code>switch сравнява една стойност с точни възможности.
+Всеки case завършва с break, а default хваща всичко останало.</code></pre>
+      </section>
+
+      <section>
+        <h2>Какво следва</h2>
+        <p>Калкулаторът и менютата засега работят само веднъж. В следващия урок ще научим цикли: начин програмата да повтаря действия, например да показва менюто отново и отново, докато човекът не избере изход.</p>
+      </section>
+
+      <footer class="footer-nav">
+        Важни страници: <a href="../index.html">Начало</a>, <a href="../docs/curriculum.html">Програма</a>, <a href="../docs/glossary.html">Речник</a>.
+      </footer>
+    </article>
+  </main>
+</body>
+</html>
