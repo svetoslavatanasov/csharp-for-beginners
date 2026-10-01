@@ -46,11 +46,24 @@ def table_cells(line: str) -> list[str]:
 
 
 def markdown_lines(md_text: str) -> list[str]:
-    """Редовете на Markdown урока без Markdown знаците, така както трябва да се виждат в HTML."""
+    """Редовете на Markdown урока без Markdown знаците, така както трябва да се виждат в HTML.
+
+    Редовете в код блоковете остават както са (само интервалите се свиват): там `#` и `**` са част от кода.
+    """
     result = []
+    in_code = False
     for raw in md_text.split("\n"):
         line = raw.strip()
-        if not line or line.startswith("```") or SEPARATOR_RE.match(line):
+        if in_code:
+            if line == "```":
+                in_code = False
+            else:
+                result.append(" ".join(line.split()))
+            continue
+        if line.startswith("```"):
+            in_code = True
+            continue
+        if not line or SEPARATOR_RE.match(line):
             continue
         if line.startswith("# "):
             label, _, heading = line[2:].partition(": ")
@@ -142,6 +155,19 @@ class SiteTests(unittest.TestCase):
             cells = re.findall(r"<t[hd]>(.*?)</t[hd]>", row, re.S)
             html_rows.append([html.unescape(re.sub(r"</?code>", "`", cell)).strip() for cell in cells])
         self.assertEqual(md_rows, html_rows)
+
+
+class MarkdownLinesTests(unittest.TestCase):
+    def test_markdown_inside_code_blocks_is_left_as_it_is(self):
+        md_text = (
+            "# Урок 1: Тест\n\n## Код\n\n"
+            '```csharp\nConsole.Write("**");\n```\n\n'
+            "```text\n#  #\n```\n"
+        )
+        lines = markdown_lines(md_text)
+        self.assertEqual(lines, ["Урок 1", "Тест", "Код", 'Console.Write("**");', "# #"])
+        text = visible_text(build_html.render_lesson(md_text, "test.md"))
+        self.assertEqual([line for line in lines if line not in text], [])
 
 
 if __name__ == "__main__":
