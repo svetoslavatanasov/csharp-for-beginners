@@ -1,0 +1,3 @@
+# Keep LF line endings in the working tree on every OS.
+# tools/build_html.py writes LF, so generated HTML never shows phantom changes.
+* text=auto eol=lf
