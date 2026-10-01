@@ -238,4 +238,9 @@ th {
   h2 {
     font-size: 1.25rem;
   }
+
+  table {
+    display: block;
+    overflow-x: auto;
+  }
 }
